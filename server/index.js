@@ -1,10 +1,12 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
-const PORT = 5900;
+const PORT = 5000;
 
-app.get("/home", (req, res) => {
-   res.status(200).json("Welcome, your app is working well");
-});
+const mongoConfig = require("./config/mongodb.config.js")
+const indexRoutes = require("./routes/indexRoutes.js");
+
+app.use('/api', indexRoutes)
 
 app.get("/", (req, res) => {
    res.status(200).json("welcome 🤗");
