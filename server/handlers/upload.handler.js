@@ -18,10 +18,7 @@ let filesLength = 0;
 const io = getIo();
 
 io.on("connection", socket => {
-   
-   
-   console.log(socket.id);
-   
+
    socket.on("getUploadDets", () => {
       socket.emit("getUploadDetsRes", {
          filesLength,

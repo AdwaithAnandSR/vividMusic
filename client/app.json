@@ -43,7 +43,11 @@
          "eas": {
             "projectId": "ae83343b-bdef-4a79-8d6d-9e3030646a37"
          },
-         "api":"http://10.163.4.165:5000"
+         "api": {
+            "client": "https://vivid-music.vercel.app",
+            "admin": "https://vividmusicserver.onrender.com",
+            "dev":"http://10.163.4.165:5000"
+         }
       },
       "owner": "adwaithanandsr"
    }

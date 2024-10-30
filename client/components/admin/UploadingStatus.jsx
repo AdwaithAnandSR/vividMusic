@@ -22,6 +22,9 @@ const UploadingStatus = () => {
    };
 
    React.useEffect(() => {
+      
+      if(!socket) return
+      
       const handleRes = ({ filesLength, uploaded }) => {
          setBundleSize(filesLength);
          setUploadedSize(uploaded);
