@@ -1,9 +1,33 @@
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 
-router.get("/home", (req, res) => {
-   res.status(200).json("Welcome, your app is working well");
+const storage = multer.memoryStorage(); // Use memory storage for quick uploads
+const upload = multer({ storage });
+
+const musicModel = require("../models/musics.js");
+const handleUpload = require("../handlers/upload.handler.js");
+
+
+
+
+router.post("/getSongs", async (req, res) => {
+   try {
+      const { limit, page } = req.body;
+      const musics = await musicModel.find({});
+      if (musics) return res.status(200).json({ musics });
+   } catch (e) {
+      console.error(e);
+   }
 });
 
-
+router.post("/addSongs", upload.array("audioFiles"), async (req, res) => {
+   const files = req.files;
+   if (!files || files.length === 0) {
+      return res.status(400).json({
+         message: "at least one audio file are required"
+      });
+   }
+   handleUpload(files, res)
+});
 module.exports = router;

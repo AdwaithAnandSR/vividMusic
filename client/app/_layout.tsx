@@ -1,17 +1,19 @@
 import { Stack } from "expo-router";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { lightTheme, darkTheme } from '../themes/themes.js'
-import { useColorScheme } from 'react-native';
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { theme } from "../themes/themes.js";
+import { SocketProvider } from "../context/socket.context.js";
 
 export default function RootLayout() {
-   const colorScheme= useColorScheme()
-   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
-   
    return (
-      <SafeAreaView style={{ width: '100%', height: '100%', backgroundColor: theme.background}}>
-      <Stack screenOptions={ {headerShown: false} }>
-         <Stack.Screen name='index' />
-      </Stack>
-      </SafeAreaView>
+      <SocketProvider>
+         <SafeAreaView
+            style={{ height: "100%", backgroundColor: theme.background }}>
+            <Stack screenOptions={{ headerShown: false }}>
+               <Stack.Screen name='index' />
+               <Stack.Screen name='admin' />
+            </Stack>
+         </SafeAreaView>
+      </SocketProvider>
    );
 }

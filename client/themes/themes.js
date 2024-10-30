@@ -1,16 +1,15 @@
-// themes.js
-export const lightTheme = {
-   background: "#FFFFFF",
-   text: "#000000",
-   primary: "#6200EE",
-   secondary: "#03DAC6"
-   // Add other colors you might need
+import { Appearance } from "react-native";
+
+const scheme = Appearance.getColorScheme();
+
+const darkMode = {
+   background: "#0a0a0a",
+   text: "white"
 };
 
-export const darkTheme = {
-   background: "#121212",
-   text: "#FFFFFF",
-   primary: "#BB86FC",
-   secondary: "#03DAC6"
-   // Add other colors you might need
+const lightMode = {
+   background: "#ffffff",
+   text: "black"
 };
+
+export const theme = scheme === "dark" ? darkMode : lightMode;

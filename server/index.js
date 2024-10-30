@@ -1,18 +1,25 @@
-require('dotenv').config();
+require("dotenv").config();
 const express = require("express");
+const http = require("http");
+const {Server} = require("socket.io");
+const cors = require("cors");
 const app = express();
+const { init } = require("./config/socket.config.js");
 const PORT = 5000;
+const server = http.createServer(app)
+const io = init(server)
 
-const mongoConfig = require("./config/mongodb.config.js")
+const mongoConfig = require("./config/mongodb.config.js");
 const indexRoutes = require("./routes/indexRoutes.js");
 
-app.use('/api', indexRoutes)
+app.use(express.json());
+app.use(cors({
+   "origin": ["exp://10.163.4.165:8081", 'exp://127.0.0.1:8081']
+}))
 
-app.get("/", (req, res) => {
-   res.status(200).json("welcome 🤗");
-});
+app.use("/", indexRoutes);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
    console.log(`Server running at http://localhost:${PORT}`);
 });
 

@@ -1,11 +1,12 @@
 {
    "expo": {
-      "name": "client",
-      "slug": "client",
+      "name": "vividMusic",
+      "slug": "vividMusic",
+      "newArchEnabled": true,
       "version": "1.0.0",
       "orientation": "portrait",
-      "icon": "./assets/images/icon.png",
-      "scheme": "myapp",
+      "icon": "./assets/images/VIVIDCHAT_LOGO.png",
+      "scheme": "vividmusic",
       "userInterfaceStyle": "automatic",
       "splash": {
          "image": "./assets/images/splash.png",
@@ -20,7 +21,7 @@
             "foregroundImage": "./assets/images/adaptive-icon.png",
             "backgroundColor": "#ffffff"
          },
-         "package": "com.adwaithanandsr.vividmusic"
+         "package": "com.adwaithanandsr.vividMusic"
       },
       "web": {
          "bundler": "metro",
@@ -28,15 +29,21 @@
          "favicon": "./assets/images/favicon.png"
       },
       "plugins": [
-         "expo-router"
+         "expo-router",
+         [
+            "expo-document-picker",
+            {
+               "iCloudContainerEnvironment": "Production"
+            }]
       ],
       "experiments": {
          "typedRoutes": true
       },
       "extra": {
          "eas": {
-            "projectId": "e99cbf8f-4453-4be2-9f96-fbeda691173f"
-         }
+            "projectId": "ae83343b-bdef-4a79-8d6d-9e3030646a37"
+         },
+         "api":"http://10.163.4.165:5000"
       },
       "owner": "adwaithanandsr"
    }
