@@ -1,10 +1,13 @@
 // socket.js
 const { Server } = require("socket.io");
 
-let io; // Declare the variable to hold the io instance
-
+let io;
 function init(server) {
-   io = new Server(server); // Initialize the io instance
+   io = new Server(server, {
+      cors: {
+         origin: "*"
+      }
+   });
    return io;
 }
 
