@@ -38,7 +38,8 @@ const handleUpload = async (files, res) => {
    try {
       filesLength = files.length;
       for (const file of files) {
-         handleItemUploadStarted(file.originalname);
+         if (typeof handleItemUploadStarted == "function")
+            handleItemUploadStarted(file.originalname);
          const fileName = `songs/${uuidv4()}_${file.originalname}`;
          const fileUpload = bucket.file(fileName);
          await fileUpload.save(file.buffer, {
