@@ -55,14 +55,24 @@ const handleUpload = async (files, res) => {
       console.log(files.length, " items uploaded successfully.");
 
       for (const file of fileUrls) {
-         let lastDotIndex = file.title.lastIndexOf(".");
-         let songName =
-            lastDotIndex !== -1
-               ? file.title.substring(0, lastDotIndex)
-               : file.title;
+         // Find the index of the last underscore
+         const lastUnderscoreIndex = file.title.lastIndexOf("_");
+
+         let formattedTitle;
+
+         if (lastUnderscoreIndex !== -1) {
+            // If there's an underscore, remove text after it
+            formattedTitle = file.title.substring(0, lastUnderscoreIndex);
+         } else {
+            // If no underscore, just use the title as is
+            formattedTitle = file.title;
+         }
+
+         // Replace all remaining underscores with spaces
+         formattedTitle = formattedTitle.replace(/_/g, " ");
 
          await musicModel.create({
-            title: songName,
+            title: formattedTitle,
             url: file.url
          });
       }
