@@ -23,8 +23,8 @@ export default function RootLayout() {
    return (
       <View
          style={{
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
+            width: '100%',
+            height: '100%',
             backgroundColor: theme.background
          }}>
          <Text
@@ -39,7 +39,6 @@ export default function RootLayout() {
             vividMusic 
          </Text>
          <TabView
-            
             navigationState={{ index, routes }}
             renderTabBar={renderTabBar}
             renderScene={renderScene}

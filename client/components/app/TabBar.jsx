@@ -8,15 +8,8 @@ const renderTabBar = props => (
    <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: "white" }}
-      style={{
-         backgroundColor: "orange",
-         width: "100%",
-         backgroundColor: theme.background,
-         display: "flex",
-         justifyContent: "space-between",
-         alignContent: "space-between"
-      }}
-      bounces
+      style={{ backgroundColor: theme.background,}}
+      bounces={false}
       tabStyle={{
          width: Dimensions.get("window").width / 2,
          height: 60

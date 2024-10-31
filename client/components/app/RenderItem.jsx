@@ -8,7 +8,7 @@ const { width: vw, height: vh } = Dimensions.get("window");
 const RenderItem = ({ item }) => {
    return (
       <TouchableOpacity style={styles.container}>
-         <Text style={styles.songName}>RenderItem</Text>
+         <Text style={styles.songName}>{item.title}</Text>
       </TouchableOpacity>
    );
 };
@@ -16,14 +16,14 @@ const RenderItem = ({ item }) => {
 const styles = StyleSheet.create({
    container: {
       width: "100%",
-      height: vh * 0.09,
+      height: vh * 0.1,
       backgroundColor: theme.item,
       marginVertical: vh * 0.004,
       borderRadius: vw * 0.01,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      paddingHorizontal: vw * 0.03
+      paddingHorizontal: vw * 0.05
    },
    songName: {
       color: theme.text,
@@ -32,4 +32,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default RenderItem;
+export default React.memo(RenderItem);
