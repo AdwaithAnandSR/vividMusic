@@ -18,7 +18,6 @@ let filesLength = 0;
 const io = getIo();
 
 io.on("connection", socket => {
-
    socket.on("getUploadDets", () => {
       socket.emit("getUploadDetsRes", {
          filesLength,
@@ -55,12 +54,18 @@ const handleUpload = async (files, res) => {
 
       console.log(files.length, " items uploaded successfully.");
 
-      await fileUrls.forEach(async file => {
+      for (const file of fileUrls) {
+         let lastDotIndex = file.title.lastIndexOf(".");
+         let songName =
+            lastDotIndex !== -1
+               ? file.title.substring(0, lastDotIndex)
+               : file.title;
+
          await musicModel.create({
-            title: file.title,
+            title: songName,
             url: file.url
          });
-      });
+      }
 
       res.status(200).json({
          message: "Songs added successfully",
