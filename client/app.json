@@ -46,7 +46,7 @@
          "api": {
             "client": "https://vivid-music.vercel.app",
             "admin": "https://vividmusicserver.onrender.com",
-            "dev":"http://10.163.4.165:5000"
+            "dev":"http://localhost:4000"
          }
       },
       "owner": "adwaithanandsr"

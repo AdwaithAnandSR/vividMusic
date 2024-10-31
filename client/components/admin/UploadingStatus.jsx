@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default UploadingStatus;
+export default React.memo(UploadingStatus);

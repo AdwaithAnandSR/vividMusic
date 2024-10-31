@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import { FlatList } from "react-native";
+import { FlashList } from "@shopify/flash-list";
+
+import RenderItem from "../../components/app/RenderItem.jsx";
 
 import { theme } from "../../themes/themes.js";
-import RenderItem from "../../components/RenderItem.jsx";
+
 
 export default function Index() {
-   const [list, setList] = useState([]);
+   const [list, setList] = useState([1 , 2]);
    return (
       <View style={styles.conatiner}>
-         <FlatList
+         <FlashList
             data={list}
             renderItem={({ item }) => <RenderItem item={item} />}
-            style={styles.list}
+            estimatedItemSize={70}
          />
       </View>
    );

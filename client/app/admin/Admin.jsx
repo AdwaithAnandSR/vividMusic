@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { router } from "expo-router";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 import adminTheme from "../../themes/admin.js";
 
@@ -9,6 +10,9 @@ const Admin = () => {
    return (
       <View style={styles.container}>
          <Text style={[styles.h1, styles.texts]}>Admin Dashboard</Text>
+         <TouchableOpacity onPress={()=> router.push("(tabs)")} style={{ marginLeft: 'auto', marginRight: 20,}}>
+         <Ionicons name="home" size={22} color={adminTheme.text} />
+         </TouchableOpacity>
          <View style={styles.listContainer}>
             <TouchableOpacity
                onPress={() => router.push('admin/UploadSongs')}
@@ -54,4 +58,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default Admin;
+export default React.memo(Admin);

@@ -2,17 +2,22 @@ import React, {useEffect, useState} from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { router } from 'expo-router';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Index = () => {
    const [isMounted, setIsMounted] = useState(false)
+   
+   const fetchDets = async ()=>{
+      const userId = await AsyncStorage.getItem('userId')
+      const role = await AsyncStorage.getItem('role')
+      
+      if(userId && role && role === 'user') router.replace('(tabs)')
+      if(userId && role && role === 'admin') router.replace('admin/Admin')
+   }
+   
    useEffect(() => {
-      if(isMounted) router.replace('admin/Admin')
-      else setIsMounted(true)
-      return ()=>{
-         setIsMounted(false)
-      }
-   }, [isMounted])
+      fetchDets()
+   }, [])
    
    
    return (

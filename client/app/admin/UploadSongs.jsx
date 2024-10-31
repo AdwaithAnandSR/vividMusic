@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default UploadSongs;
+export default React.memo(UploadSongs);

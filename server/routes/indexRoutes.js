@@ -7,7 +7,7 @@ const upload = multer({ storage });
 
 const musicModel = require("../models/musics.js");
 const handleUpload = require("../handlers/upload.handler.js");
-
+const { signin, signup } = require('../handlers/auth.handler.js')
 
 router.post("/getSongs", async (req, res) => {
    try {
@@ -28,4 +28,12 @@ router.post("/addSongs", upload.array("audioFiles"), async (req, res) => {
    }
    handleUpload(files, res)
 });
+
+
+
+// authentication routes
+
+router.post("/signin", signin);
+router.post("/signup", signup);
+
 module.exports = router;
