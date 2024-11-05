@@ -21,14 +21,14 @@ io.on("connection", socket => {
    socket.on("getUploadDets", () => {
       socket.emit("getUploadDetsRes", {
          filesLength,
-         uploaded: fileUrls.length
+         uploaded: fileDets.length
       });
    });
 
    handleItemUploadStarted = currentFile => {
       socket.emit("itemUpload", {
          currentFile,
-         uploaded: fileUrls.length,
+         uploaded: fileDets.length,
          filesLength
       });
    };
