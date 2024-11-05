@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import axios from "axios";
 
-const api = Constants.expoConfig.extra.api.client;
+const api = Constants.expoConfig.extra.api.admin;
 const useGetGlobalSongs = ({ limit, page, setList, setHasMore }) => {
    useEffect(() => {
       if (!page || !limit || !setList || !setHasMore) return;
