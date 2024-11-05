@@ -4,7 +4,7 @@ import axios from "axios";
 import * as FileSystem from "expo-file-system"; // Import FileSystem
 import { ToastAndroid } from "react-native";
 
-const api = Constants.expoConfig.extra.api.client;
+const api = Constants.expoConfig.extra.api.admin;
 
 const handleUpload = async ({ setShowProgress, setProgress }) => {
    try {
