@@ -9,6 +9,9 @@ const schema = mongoose.Schema({
       type: String,
       required: true
    },
+   cover: {
+      type: String,
+   },
    createdAt: {
       type: Date,
       default: Date.now

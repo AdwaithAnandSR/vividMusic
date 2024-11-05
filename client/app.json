@@ -2,7 +2,6 @@
    "expo": {
       "name": "vividMusic",
       "slug": "vividMusic",
-      "newArchEnabled": true,
       "version": "1.0.0",
       "orientation": "portrait",
       "icon": "./assets/images/VIVIDCHAT_LOGO.png",
@@ -21,7 +20,16 @@
             "foregroundImage": "./assets/images/adaptive-icon.png",
             "backgroundColor": "#ffffff"
          },
-         "package": "com.adwaithanandsr.vividMusic"
+         "package": "com.adwaithanandsr.vividMusic",
+         "config": {
+            "expo-av": {
+               "playsInBackground": true
+            }
+         },
+         "permissions": [
+            "READ_EXTERNAL_STORAGE",
+            "WRITE_EXTERNAL_STORAGE"
+         ]
       },
       "web": {
          "bundler": "metro",

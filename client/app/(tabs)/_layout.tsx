@@ -5,6 +5,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import FirstRoute from "./index.jsx";
 import SecondRoute from "./Profile.jsx";
 import renderTabBar from "../../components/app/TabBar.jsx";
+import TrackController from "../../components/app/TrackController.jsx";
 
 import { theme } from "../../themes/themes.js";
 
@@ -45,6 +46,7 @@ export default function RootLayout() {
             onIndexChange={setIndex}
             initialLayout={{ width: Dimensions.get("window").width }}
          />
+                  <TrackController />
       </View>
    );
 }

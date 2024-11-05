@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, StyleSheet } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { Audio } from "expo-av";
 
 import RenderItem from "../../components/app/RenderItem.jsx";
 
 import { theme } from "../../themes/themes.js";
 import useGetGlobalSongs from "../../hooks/useGetGlobalSongs.js";
 import { useSongList } from "../../context/globalSongList.js";
+import { useGlobalValues } from "../../context/globalControllerValue.js";
 
 const LIMIT = 20;
 
 const GlobalSongs = () => {
    const { globalSongList, setGlobalSongList, page, setPage } = useSongList();
+   const { setTrack } = useGlobalValues();
    const [hasMore, setHasMore] = useState(true);
 
    useGetGlobalSongs({
@@ -22,10 +25,12 @@ const GlobalSongs = () => {
    });
 
    return (
-      <View style={styles.conatiner}>
+      <View style={styles.container}>
          <FlashList
             data={globalSongList}
-            renderItem={({ item }) => <RenderItem item={item} />}
+            renderItem={({ item }) => (
+               <RenderItem item={item} setTrack={setTrack} />
+            )}
             estimatedItemSize={70}
             onEndReachedThreshold={0.5}
             keyExtractor={item => item?._id}
@@ -38,7 +43,7 @@ const GlobalSongs = () => {
 };
 
 const styles = StyleSheet.create({
-   conatiner: {
+   container: {
       flex: 1,
       backgroundColor: theme.background,
       marginHorizontal: 10,

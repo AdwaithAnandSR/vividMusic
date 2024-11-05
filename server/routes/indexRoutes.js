@@ -16,8 +16,9 @@ router.post("/getGlobalSongs", async (req, res) => {
 
       const musics = await musicModel
          .find({})
-         .skip((page - 1) * limit) 
-         .limit(limit); 
+         .sort({ title: 1 })
+         .skip((page - 1) * limit)
+         .limit(limit);
 
       if (musics) return res.status(200).json({ musics });
    } catch (e) {

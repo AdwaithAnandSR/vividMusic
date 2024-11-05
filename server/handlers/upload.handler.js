@@ -1,3 +1,4 @@
+const NodeID3 = require("node-id3");
 const admin = require("firebase-admin");
 const { v4: uuidv4 } = require("uuid");
 const serviceAccount = require("../keys/serviceKey.js");
@@ -6,14 +7,13 @@ admin.initializeApp({
    credential: admin.credential.cert(serviceAccount),
    storageBucket: "gs://vividmusic-d6d28.appspot.com"
 });
-const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const { getIo } = require("../config/socket.config.js");
 const musicModel = require("../models/musics.js");
 
 let handleItemUploadStarted;
-let fileUrls = [];
+let fileDets = [];
 let filesLength = 0;
 const io = getIo();
 
@@ -37,52 +37,56 @@ io.on("connection", socket => {
 const handleUpload = async (files, res) => {
    try {
       filesLength = files.length;
+      const imageDets = []; // To store image URLs
+
       for (const file of files) {
          if (typeof handleItemUploadStarted == "function")
             handleItemUploadStarted(file.originalname);
+
+         const tags = NodeID3.read(file.buffer);
+
          const fileName = `songs/${uuidv4()}_${file.originalname}`;
          const fileUpload = bucket.file(fileName);
+
          await fileUpload.save(file.buffer, {
             metadata: { contentType: file.mimetype }
          });
+
          const [url] = await fileUpload.getSignedUrl({
             action: "read",
             expires: "03-09-9999"
          });
-         fileUrls.push({ url, title: file.originalname });
-      }
 
-      console.log(files.length, " items uploaded successfully.");
+         if (tags.image.imageBuffer) {
+            const imageName = `covers/${uuidv4()}_${file.originalname}`;
+            const imageUpload = bucket.file(imageName);
 
-      for (const file of fileUrls) {
-         // Find the index of the last underscore
-         const lastUnderscoreIndex = file.title.lastIndexOf("_");
+            // Upload the image file
+            await imageUpload.save(tags.image.imageBuffer, {
+               metadata: { contentType: tags.image.mime }
+            });
 
-         let formattedTitle;
+            const [imageUrl] = await imageUpload.getSignedUrl({
+               action: "read",
+               expires: "03-09-9999"
+            });
 
-         if (lastUnderscoreIndex !== -1) {
-            // If there's an underscore, remove text after it
-            formattedTitle = file.title.substring(0, lastUnderscoreIndex);
-         } else {
-            // If no underscore, just use the title as is
-            formattedTitle = file.title;
+            fileDets.push({
+               cover: imageUrl,
+               url,
+               title: tags.title
+            });
          }
-
-         // Replace all remaining underscores with spaces
-         formattedTitle = formattedTitle.replace(/_/g, " ");
-
-         await musicModel.create({
-            title: formattedTitle,
-            url: file.url
-         });
       }
+
+      saveToMongoDB({ fileDets });
 
       res.status(200).json({
          message: "Songs added successfully",
-         fileUrls
+         fileDets
       });
 
-      fileUrls = [];
+      fileDets = [];
       filesLength = 0;
    } catch (error) {
       console.error("Error uploading files:", error);
@@ -90,6 +94,14 @@ const handleUpload = async (files, res) => {
          message: "Failed to add songs",
          error: error.message
       });
+   }
+};
+
+const saveToMongoDB = async ({ fileDets }) => {
+   try {
+      for (const file of fileDets) await musicModel.create(file);
+   } catch (error) {
+      console.error("Error saving to MongoDB:", error);
    }
 };
 

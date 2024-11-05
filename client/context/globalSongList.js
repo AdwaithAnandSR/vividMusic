@@ -4,10 +4,18 @@ const SongListContext = createContext();
 
 export const SongListProvider = ({ children }) => {
    const [globalSongList, setGlobalSongList] = useState([]);
+   const [track, setTrack] = useState();
    const [page, setPage] = useState(1);
    return (
       <SongListContext.Provider
-         value={{ globalSongList, setGlobalSongList, page, setPage }}>
+         value={{
+            globalSongList,
+            setGlobalSongList,
+            page,
+            setPage,
+            track,
+            setTrack
+         }}>
          {children}
       </SongListContext.Provider>
    );
