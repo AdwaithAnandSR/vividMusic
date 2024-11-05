@@ -13,22 +13,22 @@ const { getIo } = require("../config/socket.config.js");
 const musicModel = require("../models/musics.js");
 
 let handleItemUploadStarted;
-let fileDets = [];
-let filesLength = 0;
+let filesLength = 0,
+   currentLength = 0;
 const io = getIo();
 
 io.on("connection", socket => {
    socket.on("getUploadDets", () => {
       socket.emit("getUploadDetsRes", {
          filesLength,
-         uploaded: fileDets.length
+         uploaded: currentLength
       });
    });
 
    handleItemUploadStarted = currentFile => {
       socket.emit("itemUpload", {
          currentFile,
-         uploaded: fileDets.length,
+         uploaded: currentLength,
          filesLength
       });
    };
@@ -37,7 +37,7 @@ io.on("connection", socket => {
 const handleUpload = async (files, res) => {
    try {
       filesLength = files.length;
-      const imageDets = []; // To store image URLs
+      currentLength = filesLength;
 
       for (const file of files) {
          if (typeof handleItemUploadStarted == "function")
@@ -71,22 +71,20 @@ const handleUpload = async (files, res) => {
                expires: "03-09-9999"
             });
 
-            fileDets.push({
+            dets = {
                cover: imageUrl,
                url,
                title: tags.title
-            });
+            };
+            await musicModel.create(dets);
          }
+         currentLength--;
       }
 
-      saveToMongoDB({ fileDets });
-
       res.status(200).json({
-         message: "Songs added successfully",
-         fileDets
+         message: "Songs added successfully"
       });
 
-      fileDets = [];
       filesLength = 0;
    } catch (error) {
       console.error("Error uploading files:", error);
@@ -97,12 +95,5 @@ const handleUpload = async (files, res) => {
    }
 };
 
-const saveToMongoDB = async ({ fileDets }) => {
-   try {
-      for (const file of fileDets) await musicModel.create(file);
-   } catch (error) {
-      console.error("Error saving to MongoDB:", error);
-   }
-};
 
 module.exports = handleUpload;
