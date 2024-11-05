@@ -57,7 +57,7 @@ const handleUpload = async (files, res) => {
             expires: "03-09-9999"
          });
 
-         if (tags.image.imageBuffer) {
+         if (tags?.image?.imageBuffer) {
             const imageName = `covers/${uuidv4()}_${file.originalname}`;
             const imageUpload = bucket.file(imageName);
 
