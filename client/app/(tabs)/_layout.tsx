@@ -5,7 +5,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import FirstRoute from "./index.jsx";
 import SecondRoute from "./Profile.jsx";
 import renderTabBar from "../../components/app/TabBar.jsx";
-import TrackController from "../../components/app/TrackController.jsx";
+import SwipableTrackController from "../../components/app/controller/SwipableTrackController.jsx";
 
 import { theme } from "../../themes/themes.js";
 
@@ -24,8 +24,8 @@ export default function RootLayout() {
    return (
       <View
          style={{
-            width: '100%',
-            height: '100%',
+            width: "100%",
+            height: Dimensions.get("window").height,
             backgroundColor: theme.background
          }}>
          <Text
@@ -35,9 +35,9 @@ export default function RootLayout() {
                fontWeight: "bold",
                letterSpacing: -1,
                padding: 30,
-               marginBottom: Dimensions.get("window").height * 0.05,
+               marginBottom: Dimensions.get("window").height * 0.05
             }}>
-            vividMusic 
+            vividMusic
          </Text>
          <TabView
             navigationState={{ index, routes }}
@@ -46,7 +46,7 @@ export default function RootLayout() {
             onIndexChange={setIndex}
             initialLayout={{ width: Dimensions.get("window").width }}
          />
-                  <TrackController />
+         <SwipableTrackController />
       </View>
    );
 }

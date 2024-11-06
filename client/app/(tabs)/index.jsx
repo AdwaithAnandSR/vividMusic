@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { Audio } from "expo-av";
 
@@ -44,14 +44,12 @@ const GlobalSongs = () => {
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
+     flex: 1,
       backgroundColor: theme.background,
       marginHorizontal: 10,
       paddingTop: 10
    },
-   list: {
-      backgroundColor: "red"
-   }
+  
 });
 
 export default React.memo(GlobalSongs);

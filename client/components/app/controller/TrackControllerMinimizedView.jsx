@@ -7,14 +7,16 @@ import {
    TouchableOpacity
 } from "react-native";
 import { AntDesign, FontAwesome6, EvilIcons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 
-import { theme } from "../../themes/themes.js";
-import { useAudio } from "../../context/audioContext.js";
-import { useSongList } from "../../context/globalSongList.js";
+import { theme } from "../../../themes/themes.js";
+import { useAudio } from "../../../context/audioContext.js";
+import { useSongList } from "../../../context/globalSongList.js";
+const { width: vw, height: vh } = Dimensions.get("window");
 
-import handlePlayPause from "../../controller/music/playPause.controller.js";
-
-const TrackController = () => {
+const blurhash =
+   "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+const TrackControllerMinimizedView = ({ setIsMinimized }) => {
    const {
       currentTrackForUiUpdating,
       isPlaying,
@@ -29,13 +31,26 @@ const TrackController = () => {
       index = globalSongList.findIndex(
          item => item._id === currentTrackForUiUpdating._id
       );
-      if (globalSongList[index + 1]) loadAndPlayTrack(globalSongList[index + 1]);
+      if (globalSongList[index + 1])
+         loadAndPlayTrack(globalSongList[index + 1]);
       else loadAndPlayTrack(globalSongList[0]);
    };
 
    if (!currentTrackForUiUpdating) return null;
    return (
-      <View style={styles.container}>
+      <TouchableOpacity
+         onPress={() => setIsMinimized(false)}
+         activeOpacity={0.95}
+         style={styles.container}>
+         <View style={styles.imageContainer}>
+            <Image
+               style={{ width: "100%", height: "100%" }}
+               source={currentTrackForUiUpdating.cover}
+               placeholder={{ blurhash }}
+               contentFit='cover'
+               transition={1000}
+            />
+         </View>
          <Text numberOfLines={1} style={styles.text}>
             {currentTrackForUiUpdating?.title}
          </Text>
@@ -64,28 +79,34 @@ const TrackController = () => {
                <AntDesign name='stepforward' size={24} color={theme.text} />
             </TouchableOpacity>
          </View>
-      </View>
+      </TouchableOpacity>
    );
 };
 
 const styles = StyleSheet.create({
    container: {
       width: "100%",
-      height: Dimensions.get("window").height * 0.08,
+      height: Dimensions.get("window").height * 0.085,
       display: "flex",
       flexDirection: "row",
+      gap: vw * 0.02,
       alignItems: "center",
       justifyContent: "space-between",
-      backgroundColor: theme.background,
-      borderTopWidth: 0.5,
-      borderColor: theme.text,
-      paddingHorizontal: 20
+      backgroundColor: theme.minimizedTrackColor,
+      paddingHorizontal: 20,
+      borderRadius: vw * 0.02
+   },
+   imageContainer: {
+      width: vh * 0.045,
+      height: vh * 0.045,
+      borderRadius: Dimensions.get("window").width / 2,
+      overflow: "hidden"
    },
    text: {
       color: theme.text,
-      width: "80%",
+      width: "65%",
       fontWeight: "bold",
-      fontSize: Dimensions.get("window").width * 0.05
+      fontSize: Dimensions.get("window").width * 0.04
    },
    btnContainer: {
       display: "flex",
@@ -96,4 +117,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default TrackController;
+export default TrackControllerMinimizedView;

@@ -10,14 +10,16 @@ export const AudioProvider = ({ children }) => {
    const [isBuffering, setIsBuffering] = useState(false);
    const [currentTrackForUiUpdating, setCurrentTrackForUiUpdating] = useState();
    const [currentTrack, setCurrentTrack] = useState();
+   const [progress, setProgress] = useState(0);
+   const [duration, setDuration] = useState(0);
 
    const loadAndPlayTrack = async track => {
       if (currentTrack === track) return;
-      setCurrentTrackForUiUpdating(track)
+      setCurrentTrackForUiUpdating(track);
       if (sound) {
          await sound.stopAsync();
          await sound.unloadAsync();
-         setIsPlaying(false)
+         setIsPlaying(false);
       }
 
       const { sound: newSound } = await Audio.Sound.createAsync(
@@ -27,10 +29,13 @@ export const AudioProvider = ({ children }) => {
       setSound(newSound);
       setIsPlaying(true);
       setCurrentTrack(track);
-      setCurrentTrackForUiUpdating(track)
+      setCurrentTrackForUiUpdating(track);
       newSound.setOnPlaybackStatusUpdate(status => {
-         if(status.isBuffering) setIsBuffering(true)
-         else setIsBuffering(false)
+         if (duration != status.playableDurationMillis)
+            setDuration(status.playableDurationMillis);
+         setProgress(positionMillis);
+         if (status.isBuffering) setIsBuffering(true);
+         else setIsBuffering(false);
          if (status.didJustFinish) setIsPlaying(false);
       });
    };
@@ -53,6 +58,7 @@ export const AudioProvider = ({ children }) => {
       if (sound) {
          await sound.stopAsync();
          setIsPlaying(false);
+         setCurrentTrackForUiUpdating("");
       }
    };
 
@@ -70,7 +76,9 @@ export const AudioProvider = ({ children }) => {
             pause,
             play,
             stop,
-            currentTrackForUiUpdating
+            currentTrackForUiUpdating,
+            progress,
+            duration
          }}>
          {children}
       </AudioContext.Provider>

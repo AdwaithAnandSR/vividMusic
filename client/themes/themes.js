@@ -7,7 +7,9 @@ const darkMode = {
    background: "#0a0a0a",
    text: "white",
    item: '#1e1e1e5a',
-   playingItemHighlightColor: '#f71ed2ef'
+   playingItemHighlightColor: '#f71ed2ef',
+   minimizedTrackColor: '#1a1a1aef',
+   fullViewMusicControllerColor: 'black'
 };
 
 const lightMode = {
