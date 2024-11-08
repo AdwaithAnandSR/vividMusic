@@ -31,9 +31,9 @@ export const AudioProvider = ({ children }) => {
       setCurrentTrack(track);
       setCurrentTrackForUiUpdating(track);
       newSound.setOnPlaybackStatusUpdate(status => {
-         if (duration != status.playableDurationMillis)
-            setDuration(status.playableDurationMillis);
-         setProgress(positionMillis);
+         if (duration != status.durationMillis)
+            setDuration(status.durationMillis);
+         setProgress(status.positionMillis);
          if (status.isBuffering) setIsBuffering(true);
          else setIsBuffering(false);
          if (status.didJustFinish) setIsPlaying(false);

@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default SwipableTrackController;
+export default React.memo(SwipableTrackController);

@@ -1,18 +1,11 @@
 import React from "react";
-import {
-   View,
-   Text,
-   StyleSheet,
-   Dimensions,
-   TouchableOpacity
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity  } from "react-native";
 import { AntDesign, FontAwesome6 } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import Slider from "@react-native-community/slider";
 
 import { theme } from "../../../themes/themes.js";
 import { useAudio } from "../../../context/audioContext.js";
-import { useSongList } from "../../../context/globalSongList.js";
 
 const { width: vw, height: vh } = Dimensions.get("window");
 const blurhash =
@@ -25,47 +18,15 @@ const TrackControllerFullView = () => {
       loadAndPlayTrack,
       pause,
       isBuffering,
-      duration,
-      progress,
-      play
+      play,
    } = useAudio();
 
-   const { globalSongList } = useSongList();
-
-   const currentIndex = globalSongList.findIndex(
-      track => track._id === currentTrackForUiUpdating._id
-   );
 
    function msToMinSec(milliseconds) {
-  if (typeof milliseconds !== "number" || milliseconds < 0) {
-    return "00:00";
-  }
-  
-  let minutes = Math.floor(milliseconds / 60000);
-  let seconds = Math.floor((milliseconds % 60000) / 1000);
-
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
-   const playNextTrack = () => {
-      if (currentIndex < globalSongList.length - 1) {
-         const nextTrack = globalSongList[currentIndex + 1];
-         loadAndPlayTrack(nextTrack);
-      } else {
-         const nextTrack = globalSongList[0];
-         loadAndPlayTrack(nextTrack);
-      }
-   };
-
-   const playPreviousTrack = () => {
-      if (currentIndex > 0) {
-         const previousTrack = globalSongList[currentIndex - 1];
-         loadAndPlayTrack(previousTrack);
-      } else {
-         const previousTrack = globalSongList[globalSongList.lenght - 1];
-         loadAndPlayTrack(previousTrack);
-      }
-   };
+      let minutes = Math.floor(milliseconds / 60000);
+      let seconds = ((milliseconds % 60000) / 1000).toFixed(0);
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+   }
 
    return (
       <View style={styles.container}>
@@ -84,10 +45,10 @@ const TrackControllerFullView = () => {
          </View>
 
          <View style={styles.sliderContainer}>
-            <Text style={styles.time}>{msToMinSec(progress)}</Text>
+            <Text style={styles.time}>{msToMinSec(0)}</Text>
             <Slider
                style={{ width: vw * 0.8, height: 60 }}
-               value={progress / duration}
+               value={0}
                minimumValue={0}
                maximumValue={1}
                minimumTrackTintColor='#FFFFFF'
@@ -98,34 +59,29 @@ const TrackControllerFullView = () => {
 
          <View style={styles.controllsContainer}>
             <TouchableOpacity
-               onPress={playPreviousTrack}
                style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 100
                }}>
-               <AntDesign name='stepforward' size={30} color={theme.text} />
+               <AntDesign name='stepforward' size={24} color={theme.text} />
             </TouchableOpacity>
             <TouchableOpacity
-               onPress={() => {
-                  isPlaying ? pause() : play();
-               }}
                style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 100
                }}>
                <FontAwesome6
                   name={isPlaying ? "pause" : "play"}
-                  size={35}
+                  size={24}
                   color={theme.text}
                />
             </TouchableOpacity>
             <TouchableOpacity
-               onPress={playNextTrack}
                style={{
-                  padding: 15,
+                  padding: 10,
                   borderRadius: 100
                }}>
-               <AntDesign name='stepbackward' size={30} color={theme.text} />
+               <AntDesign name='stepbackward' size={24} color={theme.text} />
             </TouchableOpacity>
          </View>
       </View>
@@ -167,15 +123,12 @@ const styles = StyleSheet.create({
       color: "white"
    },
    controllsContainer: {
-      height: vh * 0.15,
+      height: vh * 0.1,
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-around",
-      alignItems: "center",
-      marginTop: vh * 0.05,
-      paddingLeft: vw * 0.05,
-      paddingRight: vw * 0.05
+      alignItems: "center"
    }
 });
 
-export default React.memo(TrackControllerFullView);
+export default TrackControllerFullView;

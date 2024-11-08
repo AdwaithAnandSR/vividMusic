@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
    }
 });
 
-export default TrackControllerMinimizedView;
+export default React.memo(TrackControllerMinimizedView);

@@ -20,16 +20,7 @@
             "foregroundImage": "./assets/images/adaptive-icon.png",
             "backgroundColor": "#ffffff"
          },
-         "package": "com.adwaithanandsr.vividMusic",
-         "config": {
-            "expo-av": {
-               "playsInBackground": true
-            }
-         },
-         "permissions": [
-            "READ_EXTERNAL_STORAGE",
-            "WRITE_EXTERNAL_STORAGE"
-         ]
+         "package": "com.adwaithanandsr.vividMusic"
       },
       "web": {
          "bundler": "metro",
