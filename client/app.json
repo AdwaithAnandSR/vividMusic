@@ -1,53 +1,41 @@
 {
-   "expo": {
-      "name": "vividMusic",
-      "slug": "vividMusic",
-      "version": "1.0.0",
-      "orientation": "portrait",
-      "icon": "./assets/images/VIVIDCHAT_LOGO.png",
-      "scheme": "vividmusic",
-      "userInterfaceStyle": "automatic",
-      "splash": {
-         "image": "./assets/images/splash.png",
-         "resizeMode": "contain",
-         "backgroundColor": "#ffffff"
-      },
-      "ios": {
-         "supportsTablet": true
-      },
-      "android": {
-         "adaptiveIcon": {
-            "foregroundImage": "./assets/images/adaptive-icon.png",
-            "backgroundColor": "#ffffff"
-         },
-         "package": "com.adwaithanandsr.vividMusic"
-      },
-      "web": {
-         "bundler": "metro",
-         "output": "static",
-         "favicon": "./assets/images/favicon.png"
-      },
-      "plugins": [
-         "expo-router",
-         [
-            "expo-document-picker",
-            {
-               "iCloudContainerEnvironment": "Production"
-            }]
-      ],
-      "experiments": {
-         "typedRoutes": true
-      },
-      "extra": {
-         "eas": {
-            "projectId": "ae83343b-bdef-4a79-8d6d-9e3030646a37"
-         },
-         "api": {
-            "client": "https://vivid-music.vercel.app",
-            "admin": "https://vividmusicserver.onrender.com",
-            "dev":"http://localhost:4000"
-         }
-      },
-      "owner": "adwaithanandsr"
-   }
+  "expo": {
+    "name": "vividMusic",
+    "slug": "vividMusic",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
 }
