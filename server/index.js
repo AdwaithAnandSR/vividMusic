@@ -11,6 +11,7 @@ const io = init(server)
 
 const mongoConfig = require("./config/mongodb.config.js");
 const indexRoutes = require("./routes/indexRoutes.js");
+const adminRoutes = require("./routes/adminRoutes.js");
 
 app.use(express.json());
 app.use(cors({
@@ -18,6 +19,7 @@ app.use(cors({
 }))
 
 app.use("/", indexRoutes);
+app.use("/admin", adminRoutes);
 
 server.listen(PORT, () => {
    console.log(`Server running at http://localhost:${PORT}`);
