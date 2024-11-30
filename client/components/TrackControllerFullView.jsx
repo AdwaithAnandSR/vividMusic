@@ -1,10 +1,11 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
    View,
    Text,
    StyleSheet,
    Dimensions,
-   TouchableOpacity
+   TouchableOpacity,
+   BackHandler
 } from "react-native";
 import { Entypo, FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { Image } from "expo-image";
@@ -17,6 +18,18 @@ const { height: vh, width: vw } = Dimensions.get("window");
 
 const TrackControllerFullView = ({ handleToMinView }) => {
    const { track } = useTrack();
+
+   useEffect(() => {
+      const backHandler = BackHandler.addEventListener(
+         "hardwareBackPress",
+         () => {
+            handleToMinView()
+            return true;
+         }
+      );
+      return () => backHandler.remove();
+   }, []);
+
    return (
       <View style={styles.container}>
          <View style={styles.navbar}>
@@ -41,17 +54,17 @@ const TrackControllerFullView = ({ handleToMinView }) => {
          </View>
 
          <View style={styles.sliderContainer}>
-            <Text style={{ color: 'white',}}>00:00</Text>
+            <Text style={{ color: "white" }}>00:00</Text>
             <Slider
                style={{ width: "75%", height: 40 }}
                minimumValue={0}
                maximumValue={200}
                value={50}
-               onSlidingComplete={(e)=> console.log(e)}
+               onSlidingComplete={e => console.log(e)}
                minimumTrackTintColor="#FFFFFF"
                maximumTrackTintColor="#656565"
             />
-            <Text style={{ color: 'white',}}>00:00</Text>
+            <Text style={{ color: "white" }}>00:00</Text>
          </View>
 
          <View style={styles.controllsContainer}>
@@ -113,7 +126,6 @@ const styles = StyleSheet.create({
       justifyContent: "space-between",
       alignItems: "center",
       alignSelf: "center"
-      //marginTop: vh * 0.2,
    },
    btnContainer: {
       padding: "8%",

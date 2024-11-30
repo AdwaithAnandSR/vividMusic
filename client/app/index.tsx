@@ -8,7 +8,7 @@ export default function Index() {
    const { styles } = useTheme();
    
    setTimeout(()=>{
-      router.push("(tabs)/Home")
+      router.replace("(tabs)/Home")
    }, 2000)
 
    return (

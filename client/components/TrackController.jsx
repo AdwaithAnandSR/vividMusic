@@ -26,7 +26,7 @@ const TrackController = () => {
    const handleToMinView = () => {
       Animated.timing(heightAnim, {
          toValue: 0.09,
-         duration: 100,
+         duration: 50,
          useNativeDriver: false
       }).start();
       setIsMinView(true)
