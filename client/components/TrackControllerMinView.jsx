@@ -22,26 +22,16 @@ const TrackControllerMinView = ({ handleToFullView }) => {
 
    const colorAnimation = useRef(new Animated.Value(0)).current;
 
-   const shuffleArray = array => {
-      for (let i = array.length - 1; i > 0; i--) {
-         const j = Math.floor(Math.random() * (i + 1));
-         [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-      }
-      return array;
-   };
-
-   const shuffledColors = shuffleArray([
-      "#23adc9",
-      "#59fcd1",
-      "#c75ef4",
-      "#f52041",
-      "#cafd63",
-      "#f72c93"
-   ]);
-
    const backgroundColor = colorAnimation.interpolate({
       inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      outputRange: shuffledColors
+      outputRange: [
+         "#23adc9",
+         "#59fcd1",
+         "#c75ef4",
+         "#f52041",
+         "#cafd63",
+         "#f72c93"
+      ]
    });
 
    useEffect(() => {

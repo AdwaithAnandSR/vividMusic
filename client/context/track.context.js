@@ -1,12 +1,22 @@
 import { useState, useEffect, useContext, createContext } from "react";
+import { useAudioPlayer, useAudioPlayerStatus} from "expo-audio";
 
 const TrackContext = createContext();
 
 export const TrackProvider = ({ children }) => {
-   const [track, setTrack] = useState();
+   const [track, setTrack] = useState(null);
+
+   const player = useAudioPlayer(track?.url || "");
+   const status = useAudioPlayerStatus(player);
+   
+   useEffect(() => {
+      if (track && track.url && player) {
+         player.play();
+      }
+   }, [track, player]);
 
    return (
-      <TrackContext.Provider value={{ track, setTrack }}>
+      <TrackContext.Provider value={{ track, setTrack, player, status }}>
          {children}
       </TrackContext.Provider>
    );
