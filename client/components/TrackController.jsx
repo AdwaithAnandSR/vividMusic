@@ -39,8 +39,10 @@ const TrackController = () => {
       <Animated.View
          style={[
             {
-               backgroundColor: "green",
-               opacity: 0.4
+               position: 'absolute',
+               width: '100%',
+               bottom: 0,
+               zIndex: 999,
             },
             {
                height: heightAnim.interpolate({

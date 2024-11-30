@@ -3,15 +3,18 @@ import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 
 import { useTheme } from "../context/theme.context.js";
+import { useTrack } from "../context/track.context.js"
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const ListItem = ({ item }) => {
    const { styles } = useTheme();
+   const { setTrack } = useTrack();
 
    return (
       <TouchableOpacity
          activeOpacity={0.6}
+         onPress={()=> setTrack(item)}
          style={{
             backgroundColor: "#272727",
             height: vh * 0.1,
