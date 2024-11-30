@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
    View,
    Text,
@@ -10,18 +10,28 @@ import {
 import { Image } from "expo-image";
 
 import { useTrack } from "../context/track.context.js";
+import { useLists } from "../context/list.context.js";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const TrackControllerMinView = ({ handleToFullView }) => {
-   const { track } = useTrack();
+   const { track, setTrack } = useTrack();
+   const { allSongs } = useLists();
+
+   const [swipeStartPos, setSwipeStartPos] = useState({});
 
    const colorAnimation = useRef(new Animated.Value(0)).current;
 
-   // Interpolate animated value to generate colors
    const backgroundColor = colorAnimation.interpolate({
-      inputRange: [0, 0.2, 0.4, 0.6, 0.8 , 1],
-      outputRange: ["#23adc9", "#59fcd1", "#c75ef4", '#f52041', '#cafd63' , "rgb(247,44,147)"]
+      inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
+      outputRange: [
+         "#23adc9",
+         "#59fcd1",
+         "#c75ef4",
+         "#f52041",
+         "#cafd63",
+         "rgb(247,44,147)"
+      ]
    });
 
    useEffect(() => {
@@ -30,7 +40,7 @@ const TrackControllerMinView = ({ handleToFullView }) => {
             Animated.timing(colorAnimation, {
                toValue: 1,
                duration: 30000,
-               useNativeDriver: false 
+               useNativeDriver: false
             }),
             Animated.timing(colorAnimation, {
                toValue: 0,
@@ -41,15 +51,44 @@ const TrackControllerMinView = ({ handleToFullView }) => {
       ).start();
    }, []);
 
+   const handleSwipeStart = e => {
+      setSwipeStartPos({ x: e.nativeEvent.pageX, y: e.nativeEvent.pageY });
+   };
+
+   const handleSwipeEnd = e => {
+      const endX = e.nativeEvent.pageX;
+      const endY = e.nativeEvent.pageY;
+
+      const diffY = endY - swipeStartPos.y;
+      if (diffY > 70) {
+         setTrack({});
+         return;
+      }
+
+      const diffX = endX - swipeStartPos.x;
+      if (diffX > 100) {
+         const currentIndex = allSongs.findIndex(
+            item => item._id === track?._id
+         );
+         if (currentIndex === allSongs.length - 1) setTrack(allSongs[0]);
+         else setTrack(allSongs[currentIndex + 1]);
+      } else if (diffX < -100) {
+         const currentIndex = allSongs.findIndex(
+            item => item._id === track?._id
+         );
+         if (currentIndex === 0) setTrack(allSongs[allSongs.length - 1]);
+         else setTrack(allSongs[currentIndex - 1]);
+      } else if (diffX === 0 && diffY === 0) handleToFullView();
+   };
+
    return (
       <TouchableOpacity
          activeOpacity={0.9}
-         onPress={handleToFullView}
+         onPressIn={handleSwipeStart}
+         onPressOut={handleSwipeEnd}
          style={styles.container}
       >
-         <Animated.View
-            style={[styles.gradient, { backgroundColor }]}
-         />
+         <Animated.View style={[styles.gradient, { backgroundColor }]} />
          <View
             style={{
                width: vh * 0.06,
@@ -88,8 +127,8 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       gap: vw * 0.03,
       marginBottom: 5,
-      overflow: 'hidden',
-      borderRadius: vw ,
+      overflow: "hidden",
+      borderRadius: vw
    },
    gradient: {
       width: "100%",

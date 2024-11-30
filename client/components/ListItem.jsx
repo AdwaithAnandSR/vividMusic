@@ -37,7 +37,6 @@ const ListItem = ({ item }) => {
                source={item.cover}
                style={{ width: "100%", height: "100%" }}
                contentFit="cover"
-               transition={1000}
             />
          </View>
          <Text

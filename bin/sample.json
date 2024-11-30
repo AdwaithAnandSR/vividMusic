@@ -1,19 +1,23 @@
 {
-   "androidImplementation": "SimpleExoPlayer",
-   "audioPan": 0,
-   "didJustFinish": false,
-   "durationMillis": 190171,
-   "isBuffering": false,
-   "isLoaded": true,
-   "isLooping": false,
-   "isMuted": false,
-   "isPlaying": true,
-   "playableDurationMillis": 106971,
-   "positionMillis": 4459,
-   "progressUpdateIntervalMillis": 500,
-   "rate": 1,
-   "shouldCorrectPitch": false,
-   "shouldPlay": true,
-   "uri": "/vividmusic-d6d28.appspot.com/songs/f68129d4-4dfb-4f6e-8635-ff3a1dbf2075__Voice_of_voiceless_Official_Music_Video_Vedan_Malayala_OPzY3ekoIrA.mp3",
-   "volume": 1
+   "changedTouches": [
+      {
+         "identifier": 0,
+         "locationX": 254.93333435058594,
+         "locationY": 2.133333444595337,
+         "pageX": 326.3999938964844,
+         "pageY": 789.8666381835938,
+         "target": 758,
+         "targetSurface": 31,
+         "timestamp": 1227176318
+      }
+   ],
+   "identifier": 0,
+   "locationX": 254.93333435058594,
+   "locationY": 2.133333444595337,
+   "pageX": 326.3999938964844,
+   "pageY": 789.8666381835938,
+   "target": 758,
+   "targetSurface": 31,
+   "timestamp": 1227176318,
+   "touches": []
 }
