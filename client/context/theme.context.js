@@ -7,11 +7,13 @@ export const ThemeProvider = ({ children }) => {
    const themeStyles = {
       light: {
          backgroundColor: "white",
-         color: "black"
+         color: "black",
+         listItem: "#264145"
       },
       dark: {
          backgroundColor: "black",
-         color: "white"
+         color: "white",
+         listItem: "#264145"
       }
    };
 
@@ -20,7 +22,6 @@ export const ThemeProvider = ({ children }) => {
    );
 
    useEffect(() => {
-      
       const subscription = Appearance.addChangeListener(({ colorScheme }) => {
          setStyles(themeStyles[colorScheme] || themeStyles["light"]);
       });

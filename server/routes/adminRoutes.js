@@ -17,3 +17,5 @@ router.post("/addSongs", upload.array("audioFiles"), async (req, res) => {
    }
    handleUpload(files, res);
 });
+
+module.exports = router;

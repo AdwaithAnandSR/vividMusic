@@ -32,11 +32,15 @@
                "resizeMode": "contain",
                "backgroundColor": "#ffffff"
             }
-         ]
+         ],
+         "expo-audio"
       ],
       "experiments": {
          "typedRoutes": true,
          "reactCompiler": true
+      },
+      "extra": {
+         "clientApi" : "http://localhost:4000"
       }
    }
 }

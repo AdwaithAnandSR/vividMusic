@@ -4,6 +4,7 @@ import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import Home from "./Home.jsx";
 import Favourites from "./Favourites.jsx";
+import TrackController from "../../components/TrackController.jsx"
 
 const renderScene = SceneMap({
    first: Home,
@@ -23,7 +24,7 @@ const renderTabBar = props => (
          backgroundColor: "#1e1d1d",
          height: Dimensions.get("window").height * 0.13,
          display: "flex",
-         justifyContent: "flex-end",
+         justifyContent: "flex-end"
       }}
    />
 );
@@ -33,12 +34,17 @@ export default function HomeLayout() {
    const [index, setIndex] = React.useState(0);
 
    return (
-      <TabView
-         navigationState={{ index, routes }}
-         renderTabBar={renderTabBar}
-         renderScene={renderScene}
-         onIndexChange={setIndex}
-         initialLayout={{ width: layout.width }}
-      />
+      <View style={{ height: "100%" }}>
+         <TabView
+            navigationState={{ index, routes }}
+            renderTabBar={renderTabBar}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+         />
+         
+         <TrackController />
+        
+      </View>
    );
 }

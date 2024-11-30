@@ -1,15 +1,35 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { FlashList } from "@shopify/flash-list";
 
-import { useTheme } from "../../context/theme.context.js"
+import { useTheme } from "../../context/theme.context.js";
+import { useLists } from "../../context/list.context.js";
+
+import useGetAllSongs from "../../hooks/useGetAllSongs.js";
+
+import ListItem from "../../components/ListItem.jsx"
 
 const Home = () => {
-   
-   const { styles } = useTheme()
-   
+   const LIMIT = 10;
+   const { styles } = useTheme();
+   const {
+      allSongs,
+      setAllSongs,
+      allSongsPage: page,
+      setAllSongsPage: setPage
+   } = useLists();
+
+   useGetAllSongs({ setAllSongs, page, limit: LIMIT });
+
    return (
-      <View style={{ backgroundColor: styles.backgroundColor, height: '100%',}}>
-         <Text>Home</Text>
+      <View style={{ backgroundColor: styles.backgroundColor, height: "100%" }}>
+         <FlashList
+            data={allSongs}
+            renderItem={({ item }) => (
+               <ListItem item={item} />
+            )}
+            estimatedItemSize={200}
+         />
       </View>
    );
 };
