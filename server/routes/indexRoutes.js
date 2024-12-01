@@ -21,6 +21,10 @@ router.post("/getGlobalSongs", async (req, res) => {
    }
 });
 
+router.get("/", async (req, res) => {
+   res.send("heyy");
+});
+
 // authentication routes
 router.post("/signin", signin);
 router.post("/signup", signup);
