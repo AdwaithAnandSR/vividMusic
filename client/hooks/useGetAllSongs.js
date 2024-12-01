@@ -5,17 +5,22 @@ import Constants from "expo-constants";
 const api = Constants.expoConfig.extra.clientApi || "http://localhost:4000";
 
 const useGetAllSongs = ({ page, limit, setAllSongs }) => {
-   console.log(api);
+   const [loading, setLoading] = useState(true);
+   const [hasMore, setHasMore] = useState(true);
+
    useEffect(() => {
       if (!page || !limit || !setAllSongs) return;
 
       const fetchSongs = async () => {
-         console.log("fetching...");
-         const res = await axios.post(`${'https://vivid-music.vercel.app'}/getGlobalSongs`, { limit, page });
+         setLoading(true);
+         const res = await axios.post(`${api}/getGlobalSongs`, { limit, page });
+         if (res.data.musics.length < limit) setHasMore(false);
          setAllSongs(prev => [...prev, ...res.data.musics]);
-         console.log(res);
+         setLoading(false);
       };
       fetchSongs();
+
+      return { loading, hasMore };
    }, [page]);
 };
 
