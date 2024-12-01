@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adwaithanandsr.vividMusic"
     },
     "android": {
       "adaptiveIcon": {
@@ -47,7 +48,8 @@
       "reactCompiler": true
     },
     "extra": {
-      "clientApi": "http://localhost:4000",
+      "clientApi": "https://vivid-music.vercel.app",
+      "bin": "https://vivid-music.vercel.app",
       "router": {
         "origin": false
       },

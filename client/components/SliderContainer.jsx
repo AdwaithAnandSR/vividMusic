@@ -4,30 +4,38 @@ import Slider from "@react-native-community/slider";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
-const SliderContainer = ({ status }) => {
+const SliderContainer = ({ status, player , lightVibrant}) => {
    const formateTime = ms => {
+      if(!ms) return `00:00`;
       const minutes = Math.floor(ms / 60000);
       const seconds = Math.floor((ms % 60000) / 1000);
       const formattedMinutes = String(minutes).padStart(2, "0");
       const formattedSeconds = String(seconds).padStart(2, "0");
       return `${formattedMinutes}:${formattedSeconds}`;
    };
-   
+
    return (
       <View style={styles.sliderContainer}>
          <Text style={{ color: "white" }}>
             {formateTime(status.currentTime)}
          </Text>
          <Slider
-            style={{ width: "75%", height: 40 }}
+            style={{ width: "70%", height: 40 }}
             minimumValue={0}
-            maximumValue={200}
+            maximumValue={1}
             value={status.currentTime / status.duration}
-            onSlidingComplete={e => console.log(e)}
+            onSlidingComplete={async value => {
+               try {
+                  await player.seekTo(value/1000);
+               } catch (error) {
+                  throw new Error(error)
+               }
+            }}
             minimumTrackTintColor="#FFFFFF"
-            maximumTrackTintColor="#656565"
+            maximumTrackTintColor="#a6a5a5"
+            thumbTintColor={lightVibrant}
          />
-         <Text style={{ color: "white" }}>{formateTime(status.duration)}</Text>
+         <Text style={{ color: "white" }}>{formateTime(status.duration).length > 10 ? '00:00' : formateTime(status.duration)}</Text>
       </View>
    );
 };
@@ -38,7 +46,7 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       justifyContent: "center",
       alignItems: "center",
-      marginVertical: vh * 0.04
+      marginVertical: vh * 0.05
    }
 });
 

@@ -13,7 +13,7 @@ export const ThemeProvider = ({ children }) => {
       dark: {
          backgroundColor: "black",
          color: "white",
-         listItem: "#264145"
+         listItem: "#121212"
       }
    };
 

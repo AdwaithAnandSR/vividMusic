@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet , TouchableOpacity } from "react-native";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";;
 
-const ControllersContainer = ({ status, player }) => {
+const ControllersContainer = ({ status, player, handlePlayPrev, handlePlayNext }) => {
    return (
       <View style={styles.controllsContainer}>
-         <TouchableOpacity style={styles.btnContainer}>
+         <TouchableOpacity onPress={handlePlayPrev} style={styles.btnContainer}>
             <AntDesign name="stepbackward" size={28} color="white" />
          </TouchableOpacity>
          {status.playing ? (
@@ -23,7 +23,7 @@ const ControllersContainer = ({ status, player }) => {
                <FontAwesome5 name="play" size={28} color="white" />
             </TouchableOpacity>
          )}
-         <TouchableOpacity style={styles.btnContainer}>
+         <TouchableOpacity onPress={handlePlayNext} style={styles.btnContainer}>
             <AntDesign name="stepforward" size={28} color="white" />
          </TouchableOpacity>
       </View>

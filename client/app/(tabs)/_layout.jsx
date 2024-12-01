@@ -21,7 +21,7 @@ const renderTabBar = props => (
       {...props}
       indicatorStyle={{ backgroundColor: "white" }}
       style={{
-         backgroundColor: "#1e1d1d",
+         backgroundColor: "#121212",
          height: Dimensions.get("window").height * 0.13,
          display: "flex",
          justifyContent: "flex-end"

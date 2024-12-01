@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import {
    View,
    Text,
@@ -8,6 +8,7 @@ import {
    Animated
 } from "react-native";
 import { Image } from "expo-image";
+import LottieView from "lottie-react-native";
 
 import { useTrack } from "../context/track.context.js";
 import { useLists } from "../context/list.context.js";
@@ -15,40 +16,47 @@ import { useLists } from "../context/list.context.js";
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const TrackControllerMinView = ({ handleToFullView }) => {
-   const { track, setTrack } = useTrack();
+   const { track, setTrack, status } = useTrack();
    const { allSongs } = useLists();
 
    const [swipeStartPos, setSwipeStartPos] = useState({});
 
-   const colorAnimation = useRef(new Animated.Value(0)).current;
+   const arr = [0, 0.2, 0.4, 0.6, 0.8, 1];
 
-   const backgroundColor = colorAnimation.interpolate({
-      inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
-      outputRange: [
-         "#23adc9",
-         "#59fcd1",
-         "#c75ef4",
-         "#f52041",
-         "#cafd63",
-         "#f72c93"
-      ]
-   });
+   const randomElem = arr[Math.floor(Math.random() * arr.length)];
+
+   const colorAnimation = useRef(new Animated.Value(randomElem)).current;
+
+   const backgroundColor = useMemo(() => {
+      return colorAnimation.interpolate({
+         inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
+         outputRange: [
+            "#23adc9",
+            "#59fcd1",
+            "#c75ef4",
+            "#f52041",
+            "#cafd63",
+            "#f72c93"
+         ]
+      });
+   }, [colorAnimation]);
 
    useEffect(() => {
       Animated.loop(
          Animated.sequence([
             Animated.timing(colorAnimation, {
                toValue: 1,
-               duration: 30000,
+               duration: 50000,
                useNativeDriver: false
             }),
             Animated.timing(colorAnimation, {
                toValue: 0,
-               duration: 30000,
+               duration: 50000,
                useNativeDriver: false
             })
          ])
       ).start();
+      return () => colorAnimation.stopAnimation();
    }, []);
 
    const handleSwipeStart = e => {
@@ -61,7 +69,7 @@ const TrackControllerMinView = ({ handleToFullView }) => {
 
       const diffY = endY - swipeStartPos.y;
       if (diffY > 70) {
-         setTrack({});
+         setTrack();
          return;
       }
 
@@ -81,6 +89,8 @@ const TrackControllerMinView = ({ handleToFullView }) => {
       } else if (diffX === 0 && diffY === 0) handleToFullView();
    };
 
+   if (!track) return;
+
    return (
       <TouchableOpacity
          activeOpacity={0.9}
@@ -95,7 +105,8 @@ const TrackControllerMinView = ({ handleToFullView }) => {
                height: vh * 0.06,
                borderRadius: vh * 0.5,
                overflow: "hidden",
-               marginLeft: vw * 0.03
+               marginLeft: vw * 0.03,
+               justifyContent: "center"
             }}
          >
             <Image
@@ -104,12 +115,27 @@ const TrackControllerMinView = ({ handleToFullView }) => {
                contentFit="cover"
                transition={1000}
             />
+            {status.playing || status.isBuffering ? (
+               <LottieView
+                  source={require("../assets/animations/musicPlayingAnim2.json")}
+                  autoPlay
+                  loop
+                  style={{
+                     width: 35,
+                     height: 35,
+                     opacity: 0.8,
+                     marginLeft: -10,
+                     position: "absolute",
+                     alignSelf: "center",
+                     color: '#cc4cf9',
+                  }}
+               />
+            ) : null}
          </View>
-
          <Text
             numberOfLines={2}
             style={{
-               width: "80%",
+               width: "75%",
                fontWeight: "bold",
                fontSize: vw * 0.04
             }}

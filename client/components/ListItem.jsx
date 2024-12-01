@@ -1,24 +1,25 @@
 import React from "react";
 import { View, Text, Dimensions, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
+import LottieView from "lottie-react-native";
 
 import { useTheme } from "../context/theme.context.js";
-import { useTrack } from "../context/track.context.js"
+import { useTrack } from "../context/track.context.js";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const ListItem = ({ item }) => {
    const { styles } = useTheme();
-   const { setTrack } = useTrack();
+   const { setTrack, track, status } = useTrack();
 
    return (
       <TouchableOpacity
          activeOpacity={0.6}
-         onPress={()=> setTrack(item)}
+         onPress={() => setTrack(item)}
          style={{
-            backgroundColor: "#272727",
+            backgroundColor: styles.listItem,
             height: vh * 0.1,
-            marginVertical: vh * 0.002,
+            marginVertical: vh * 0.001,
             alignItems: "center",
             flexDirection: "row",
             gap: vw * 0.03,
@@ -41,10 +42,23 @@ const ListItem = ({ item }) => {
          </View>
          <Text
             numberOfLines={2}
-            style={{ color: styles.color, width: vw * 0.8, fontWeight: "bold" }}
+            style={{ color: styles.color, width: vw * 0.7, fontWeight: "bold" }}
          >
             {item.title}
          </Text>
+
+         {track === item && (status.playing || status.isBuffering) ? (
+            <LottieView
+               source={require("../assets/animations/musicPlayingAnim.json")}
+               autoPlay
+               loop
+               style={{
+                  width: 40,
+                  height: 40,
+                  marginLeft: -10,
+               }}
+            />
+         ) : null}
       </TouchableOpacity>
    );
 };
