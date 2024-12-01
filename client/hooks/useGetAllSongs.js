@@ -19,9 +19,8 @@ const useGetAllSongs = ({ page, limit, setAllSongs }) => {
          setLoading(false);
       };
       fetchSongs();
-
-      return { loading, hasMore };
    }, [page]);
+   return { loading, hasMore };
 };
 
 export default useGetAllSongs;

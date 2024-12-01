@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+import { useAudioPlayer, useAudioPlayerStatus, AudioModule } from "expo-audio";
 
 const TrackContext = createContext();
 
@@ -10,9 +10,20 @@ export const TrackProvider = ({ children }) => {
    const status = useAudioPlayerStatus(player);
 
    useEffect(() => {
+      const setUpPlayer = async () =>
+         await AudioModule.setAudioModeAsync({
+            interruptionMode: "doNotMix",
+            playsInSilentMode: true,
+            shouldPlayInBackground: true,
+            shouldRouteThroughEarpiece: true
+         });
+      setUpPlayer();
+   }, []);
+
+   useEffect(() => {
       if (track && track.url && player) {
          player.play();
-         
+
          const setUp = async () => {
             const res = await player.setAudioModeAsync({
                playsInSilentMode: true,
@@ -20,7 +31,7 @@ export const TrackProvider = ({ children }) => {
                shouldRouteThroughEarpiece: true
             });
          };
-         setUp()
+         setUp();
       }
    }, [track, player]);
 
