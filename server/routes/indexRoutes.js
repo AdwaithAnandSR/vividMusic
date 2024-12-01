@@ -22,7 +22,8 @@ router.post("/getGlobalSongs", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-   res.send("heyy");
+   const musics = await musicModel.find({});
+   res.send(musics);
 });
 
 // authentication routes
