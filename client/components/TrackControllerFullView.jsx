@@ -58,6 +58,7 @@ const TrackControllerFullView = ({ handleToMinView }) => {
 
    return (
       <View style={[styles.container]}>
+      
          {/* navbar */}
 
          <View style={styles.navbar}>
@@ -70,6 +71,7 @@ const TrackControllerFullView = ({ handleToMinView }) => {
          </View>
 
          {/* title */}
+         
          <View style={{ height: vh * 0.125, justifyContent: "center" }}>
             <Text numberOfLines={2} style={styles.title}>
                {track?.title}
@@ -87,7 +89,7 @@ const TrackControllerFullView = ({ handleToMinView }) => {
             <Image
                source={track.cover}
                contentFit="cover"
-               filter="contrast(1.2) brightness(0.8)" //
+               filter="contrast(1.25) brightness(0.8)"
                style={{ width: "100%", height: "100%" }}
             />
          </View>

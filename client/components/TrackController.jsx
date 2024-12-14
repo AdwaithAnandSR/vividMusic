@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
    View,
    Text,
@@ -13,14 +13,14 @@ import TrackControllerMinView from "./TrackControllerMinView.jsx";
 const TrackController = () => {
    const heightAnim = useRef(new Animated.Value(0.09)).current;
    const [isMinView, setIsMinView] = useState(true);
-
+   
    const handleToFullView = () => {
       Animated.timing(heightAnim, {
          toValue: 1,
          duration: 100,
          useNativeDriver: false
       }).start();
-      setIsMinView(false)
+      setIsMinView(false);
    };
 
    const handleToMinView = () => {
@@ -29,7 +29,7 @@ const TrackController = () => {
          duration: 50,
          useNativeDriver: false
       }).start();
-      setIsMinView(true)
+      setIsMinView(true);
    };
 
    const AnimatedTouchableOpacity =
@@ -39,10 +39,10 @@ const TrackController = () => {
       <Animated.View
          style={[
             {
-               position: 'absolute',
-               width: '100%',
+               position: "absolute",
+               width: "100%",
                bottom: 0,
-               zIndex: 999,
+               zIndex: 999
             },
             {
                height: heightAnim.interpolate({

@@ -1,9 +1,10 @@
-import React from "react";
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 
 import { useTheme } from "../../context/theme.context.js";
 import { useLists } from "../../context/list.context.js";
+import { useTrack } from "../../context/track.context.js";
 
 import useGetAllSongs from "../../hooks/useGetAllSongs.js";
 
@@ -18,9 +19,10 @@ const Home = () => {
       allSongsPage: page,
       setAllSongsPage: setPage
    } = useLists();
+   const { track, setTrack, player, status } = useTrack();
 
    useGetAllSongs({ setAllSongs, page, limit: LIMIT });
-
+   
    return (
       <View style={{ backgroundColor: styles.backgroundColor, height: "100%" }}>
          <FlashList

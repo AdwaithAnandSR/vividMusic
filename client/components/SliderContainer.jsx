@@ -26,7 +26,7 @@ const SliderContainer = ({ status, player , lightVibrant}) => {
             value={status.currentTime / status.duration}
             onSlidingComplete={async value => {
                try {
-                  await player.seekTo(value/1000);
+                  await player.seekTo((value * status.duration) );
                } catch (error) {
                   throw new Error(error)
                }
