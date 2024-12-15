@@ -15,7 +15,7 @@ const adminRoutes = require("./routes/adminRoutes.js");
 
 app.use(express.json());
 app.use(cors({
-   "origin": ["exp://10.46.107.73:8081", 'exp://127.0.0.1:8081']
+   "origin": ["exp://10.46.107.73:8081", 'exp://127.0.0.1:8081', "*"]
 }))
 
 app.use("/", indexRoutes);

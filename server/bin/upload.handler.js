@@ -1,28 +1,16 @@
-const NodeID3 = require("node-id3");
-const admin = require("firebase-admin");
-const { v4: uuidv4 } = require("uuid");
-const serviceAccount = require("../keys/serviceKey.js");
 
-admin.initializeApp({
-   credential: admin.credential.cert(serviceAccount),
-   storageBucket: "gs://vividmusic-d6d28.appspot.com"
-});
-const bucket = admin.storage().bucket();
-
-const { getIo } = require("../config/socket.config.js");
-const musicModel = require("../models/musics.js");
-
-const io = getIo();
 
 const handleUpload = async (files, res) => {
    try {
-      io.emit("fileSize", files.length);
-      const filesLength = files.length;
-      let position = 1;
+      filesLength = files.length;
+      currentLength = filesLength;
 
       for (const file of files) {
-         io.emit("currentUploading", {name: file.originalname, position});
-         position ++
+         if (typeof handleItemUploadStarted == "function")
+            handleItemUploadStarted(file.originalname);
+
+         const tags = NodeID3.read(file.buffer);
+
          const fileName = `songs/${uuidv4()}_${file.originalname}`;
          const fileUpload = bucket.file(fileName);
 
@@ -35,12 +23,11 @@ const handleUpload = async (files, res) => {
             expires: "03-09-9999"
          });
 
-         const tags = NodeID3.read(file.buffer);
-
          if (tags?.image?.imageBuffer) {
             const imageName = `covers/${uuidv4()}_${file.originalname}`;
             const imageUpload = bucket.file(imageName);
 
+            // Upload the image file
             await imageUpload.save(tags.image.imageBuffer, {
                metadata: { contentType: tags.image.mime }
             });
@@ -50,18 +37,19 @@ const handleUpload = async (files, res) => {
                expires: "03-09-9999"
             });
 
-            await musicModel.create({
+            dets = {
                cover: imageUrl,
                url,
                title: tags.title
-            });
+            };
+            await musicModel.create(dets);
          }
+         currentLength--;
       }
-      
-      io.emit("uploadingFinished");
-   } catch (error) {
-      console.error("Error uploading files:", error);
-   }
-};
 
-module.exports = handleUpload;
+      res.status(200).json({
+         message: "Songs added successfully"
+      });
+
+      filesLength = 0;
+   } 
