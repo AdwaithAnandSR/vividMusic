@@ -21,43 +21,70 @@ const handleUpload = async (files, res) => {
       let position = 1;
 
       for (const file of files) {
-         io.emit("currentUploading", {name: file.originalname, position});
-         position ++
-         const fileName = `songs/${uuidv4()}_${file.originalname}`;
-         const fileUpload = bucket.file(fileName);
+         io.emit("currentUploading", { name: file.originalname, position });
 
-         await fileUpload.save(file.buffer, {
-            metadata: { contentType: file.mimetype }
-         });
+         try {
+            const fileName = `songs/${uuidv4()}_${file.originalname}`;
+            const fileUpload = bucket.file(fileName);
 
-         const [url] = await fileUpload.getSignedUrl({
-            action: "read",
-            expires: "03-09-9999"
-         });
-
-         const tags = NodeID3.read(file.buffer);
-
-         if (tags?.image?.imageBuffer) {
-            const imageName = `covers/${uuidv4()}_${file.originalname}`;
-            const imageUpload = bucket.file(imageName);
-
-            await imageUpload.save(tags.image.imageBuffer, {
-               metadata: { contentType: tags.image.mime }
+            await fileUpload.save(file.buffer, {
+               metadata: { contentType: file.mimetype }
             });
+            
+            console.log('\tsong uploading...', position);
 
-            const [imageUrl] = await imageUpload.getSignedUrl({
+            const [url] = await fileUpload.getSignedUrl({
                action: "read",
                expires: "03-09-9999"
             });
 
-            await musicModel.create({
-               cover: imageUrl,
-               url,
-               title: tags.title
+            const tags = NodeID3.read(file.buffer);
+            let imageUrl = null;
+
+            if (tags?.image?.imageBuffer) {
+               const imageName = `covers/${uuidv4()}_${file.originalname}`;
+               const imageUpload = bucket.file(imageName);
+
+               console.log('\timage uploading...', position);
+               
+               await imageUpload.save(tags.image.imageBuffer, {
+                  metadata: { contentType: tags.image.mime }
+               });
+
+               [imageUrl] = await imageUpload.getSignedUrl({
+                  action: "read",
+                  expires: "03-09-9999"
+               });
+            }
+
+            try {
+               console.log('\tuploading to db...', position);
+               await musicModel.create({
+                  cover: imageUrl || null,
+                  url,
+                  title:
+                     tags.title ||
+                     file.originalname.split(".").slice(0, -1).join(".") ||
+                     "Unknown Title"
+               });
+            } catch (error) {
+               console.error(
+                  `Error adding song ${
+                     tags.title || file.originalname
+                  } to MongoDB:`,
+                  error
+               );
+            }
+         } catch (error) {
+            console.error(`Error processing file ${file.originalname}:`, error);
+            io.emit("uploadError", {
+               song: file.originalname,
+               error: error.message
             });
          }
+         position++;
       }
-      
+
       io.emit("uploadingFinished");
    } catch (error) {
       console.error("Error uploading files:", error);
