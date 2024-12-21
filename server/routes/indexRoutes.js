@@ -11,7 +11,7 @@ router.post("/getGlobalSongs", async (req, res) => {
 
       const musics = await musicModel
          .find({})
-         .sort({ title: 1 })
+         .sort({ createdAt: -1 })
          .skip((page - 1) * limit)
          .limit(limit);
 

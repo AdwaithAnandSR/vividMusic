@@ -4,11 +4,14 @@ const http = require("http");
 const {Server} = require("socket.io");
 const cors = require("cors");
 const app = express();
+
 const { init } = require("./config/socket.config.js");
+
 const PORT = process.env.PORT || 4000;
 const server = http.createServer(app)
 const io = init(server)
 
+const uploadHandler = require('./handlers/socket.file.handler.js')
 const mongoConfig = require("./config/mongodb.config.js");
 const indexRoutes = require("./routes/indexRoutes.js");
 const adminRoutes = require("./routes/adminRoutes.js");

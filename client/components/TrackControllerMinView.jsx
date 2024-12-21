@@ -18,46 +18,44 @@ const { height: vh, width: vw } = Dimensions.get("window");
 const TrackControllerMinView = ({ handleToFullView }) => {
    const { track, setTrack, status } = useTrack();
    const { allSongs } = useLists();
-
    const [swipeStartPos, setSwipeStartPos] = useState({});
 
    const arr = [0, 0.2, 0.4, 0.6, 0.8, 1];
-
    const randomElem = arr[Math.floor(Math.random() * arr.length)];
-
    const colorAnimation = useRef(new Animated.Value(randomElem)).current;
 
-   const backgroundColor = useMemo(() => {
-      return colorAnimation.interpolate({
-         inputRange: [0, 0.2, 0.4, 0.6, 0.8, 1],
-         outputRange: [
-            "#23adc9",
-            "#59fcd1",
-            "#c75ef4",
-            "#f52041",
-            "#cafd63",
-            "#f72c93"
-         ]
-      });
-   }, [colorAnimation]);
+   const backgroundColor = colorAnimation.interpolate({
+      inputRange: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+      outputRange: [
+         "#23adc9",
+         "#59fcd1",
+         "#c75ef4",
+         "#f52041",
+         "#cafd63",
+         "#f72c93",
+         "#cafd63",
+         "#f52041",
+         "#c75ef4",
+         "#59fcd1",
+         "#23adc9"
+      ]
+   });
 
    useEffect(() => {
-      Animated.loop(
+      const loopAnimation = Animated.loop(
          Animated.sequence([
             Animated.timing(colorAnimation, {
                toValue: 1,
-               duration: 50000,
-               useNativeDriver: false
-            }),
-            Animated.timing(colorAnimation, {
-               toValue: 0,
-               duration: 50000,
+               duration: 80000,
                useNativeDriver: false
             })
          ])
-      ).start();
-      return () => colorAnimation.stopAnimation();
-   }, []);
+      );
+      loopAnimation.start();
+
+      // Cleanup to stop animation on component unmount
+      return () => loopAnimation.stop();
+   }, [colorAnimation]);
 
    const handleSwipeStart = e => {
       setSwipeStartPos({ x: e.nativeEvent.pageX, y: e.nativeEvent.pageY });
@@ -127,7 +125,7 @@ const TrackControllerMinView = ({ handleToFullView }) => {
                      marginLeft: -10,
                      position: "absolute",
                      alignSelf: "center",
-                     color: '#cc4cf9',
+                     color: "#cc4cf9"
                   }}
                />
             ) : null}

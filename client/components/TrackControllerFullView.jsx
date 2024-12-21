@@ -58,7 +58,6 @@ const TrackControllerFullView = ({ handleToMinView }) => {
 
    return (
       <View style={[styles.container]}>
-      
          {/* navbar */}
 
          <View style={styles.navbar}>
@@ -71,7 +70,7 @@ const TrackControllerFullView = ({ handleToMinView }) => {
          </View>
 
          {/* title */}
-         
+
          <View style={{ height: vh * 0.125, justifyContent: "center" }}>
             <Text numberOfLines={2} style={styles.title}>
                {track?.title}
@@ -87,7 +86,11 @@ const TrackControllerFullView = ({ handleToMinView }) => {
             ]}
          >
             <Image
-               source={track.cover}
+               source={
+                  track.cover
+                     ? { uri: track.cover }
+                     : require("../assets/images/images.jpeg")
+               }
                contentFit="cover"
                filter="contrast(1.25) brightness(0.8)"
                style={{ width: "100%", height: "100%" }}
@@ -134,7 +137,8 @@ const styles = StyleSheet.create({
       fontSize: vw * 0.045,
       fontWeight: "bold",
       alignSelf: "center",
-      width: "80%"
+      width: "80%",
+      textAlign: 'center',
    },
    imageContainer: {
       width: vw * 0.8,

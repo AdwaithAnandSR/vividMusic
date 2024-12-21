@@ -1,19 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
-import {
-   View,
-   Text,
-   TouchableOpacity,
-   StyleSheet,
-   Animated
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Animated } from "react-native";
 
 import TrackControllerFullView from "./TrackControllerFullView.jsx";
 import TrackControllerMinView from "./TrackControllerMinView.jsx";
 
+import { useTrack } from "../context/track.context.js";
+
 const TrackController = () => {
    const heightAnim = useRef(new Animated.Value(0.09)).current;
    const [isMinView, setIsMinView] = useState(true);
-   
+   const { track } = useTrack();
+
+   if (!track) return null;
+
    const handleToFullView = () => {
       Animated.timing(heightAnim, {
          toValue: 1,

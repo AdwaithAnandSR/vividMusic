@@ -35,7 +35,11 @@ const ListItem = ({ item }) => {
             }}
          >
             <Image
-               source={item.cover}
+               source={
+                  item.cover
+                     ? { uri: item.cover }
+                     : require("../assets/images/images.jpeg")
+               }
                style={{ width: "100%", height: "100%" }}
                contentFit="cover"
             />
@@ -55,7 +59,7 @@ const ListItem = ({ item }) => {
                style={{
                   width: 40,
                   height: 40,
-                  marginLeft: -10,
+                  marginLeft: -10
                }}
             />
          ) : null}

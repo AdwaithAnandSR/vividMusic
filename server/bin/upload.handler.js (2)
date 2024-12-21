@@ -14,15 +14,6 @@ const musicModel = require("../models/musics.js");
 
 const io = getIo();
 
-// io.on('connection', (socket)=>{
-//    console.log('user connected');
-//    socket.on('uploadAudio', dets=>{
-//       console.log(dets);
-//    })
-   
-//    socket.on('disconnect', ()=> console.log('user disconnected'))
-// })
-
 const handleUpload = async (files, res) => {
    try {
       io.emit("fileSize", files.length);
@@ -40,6 +31,7 @@ const handleUpload = async (files, res) => {
                metadata: { contentType: file.mimetype }
             });
             
+            console.log('\tsong uploading...', position);
 
             const [url] = await fileUpload.getSignedUrl({
                action: "read",
@@ -52,6 +44,8 @@ const handleUpload = async (files, res) => {
             if (tags?.image?.imageBuffer) {
                const imageName = `covers/${uuidv4()}_${file.originalname}`;
                const imageUpload = bucket.file(imageName);
+
+               console.log('\timage uploading...', position);
                
                await imageUpload.save(tags.image.imageBuffer, {
                   metadata: { contentType: tags.image.mime }
@@ -64,6 +58,7 @@ const handleUpload = async (files, res) => {
             }
 
             try {
+               console.log('\tuploading to db...', position);
                await musicModel.create({
                   cover: imageUrl || null,
                   url,

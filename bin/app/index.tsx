@@ -8,7 +8,7 @@ export default function Index() {
    const { styles } = useTheme();
    
    setTimeout(()=>{
-      router.replace("(tabs)/Home")
+      //router.replace("(tabs)/Home")
    }, 2000)
 
    return (
@@ -24,7 +24,8 @@ export default function Index() {
             style={{
                color: styles.color,
                fontSize: vw * 0.2,
-               fontWeight: "bold"
+               fontWeight: "bold",
+               letterSpacing: 6,
             }}
          >
             vividMusic
