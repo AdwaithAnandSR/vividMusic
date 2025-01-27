@@ -11,11 +11,7 @@ useEffect(() => {
 }, [])
 
 
-  return (
-    <View>
-      <Text>index</Text>
-    </View>
-  )
+  return <View style={{ height: "100%", backgroundColor: "black" }}></View>;
 }
 
 export default index
