@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-import { useTheme } from "../context/theme.context.js";
+import { useTheme } from "../../context/theme.context.js";
 
 const Favourites = () => {
    const { styles } = useTheme();
