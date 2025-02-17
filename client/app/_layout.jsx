@@ -1,8 +1,10 @@
 import { Stack } from "expo-router";
 import { View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import TrackController from "../components/TrackController.jsx";
 import Navbar from "../components/Navbar.jsx";
+
 import { ThemeProvider } from "../context/theme.context.js";
 import { ListProvider } from "../context/list.context.js";
 import { TrackProvider } from "../context/track.context.js";
@@ -12,7 +14,7 @@ const _layout = () => {
     <ThemeProvider>
       <ListProvider>
         <TrackProvider>
-          <View
+          <SafeAreaView
             style={{ width: "100%", height: "100%", backgroundColor: "black" }}
           >
             <Navbar />
@@ -21,7 +23,7 @@ const _layout = () => {
               <Stack.Screen name="home" />
             </Stack>
             <TrackController />
-          </View>
+          </SafeAreaView>
         </TrackProvider>
       </ListProvider>
     </ThemeProvider>

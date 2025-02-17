@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 
 import * as React from "react";
-import { View, useWindowDimensions, Dimensions } from "react-native";
+import { Text, View, useWindowDimensions, Dimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 
 import Home from "./Home.jsx";
