@@ -9,6 +9,8 @@ import { useTrack } from "../../context/track.context.js";
 import useGetAllSongs from "../../hooks/useGetAllSongs.js";
 
 import ListItem from "../../components/ListItem.jsx";
+import Navbar from "../../components/Navbar.jsx";
+
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
@@ -31,6 +33,7 @@ const Home = () => {
 
    return (
       <View style={{ backgroundColor: styles.backgroundColor, height: "100%" }}>
+         <Navbar />
          <FlashList
             data={allSongs}
             renderItem={({ item }) => <ListItem item={item} />}

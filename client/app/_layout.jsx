@@ -17,10 +17,11 @@ const _layout = () => {
           <SafeAreaView
             style={{ width: "100%", height: "100%", backgroundColor: "black" }}
           >
-            <Navbar />
+            
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="index" />
               <Stack.Screen name="home" />
+              <Stack.Screen name="others/Search" />
             </Stack>
             <TrackController />
           </SafeAreaView>
