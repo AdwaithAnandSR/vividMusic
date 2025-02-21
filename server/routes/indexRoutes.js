@@ -23,6 +23,7 @@ router.post("/getGlobalSongs", async (req, res) => {
 
 router.get("/", async (req, res) => {
    const musics = await musicModel.find({});
+   console.log('/ route');
    res.send(musics);
 });
 
