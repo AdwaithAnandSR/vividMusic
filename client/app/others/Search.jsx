@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
 import React from "react";
 
@@ -14,10 +15,20 @@ const Search = () => {
         />
         <Text>Search</Text>
       </View>
+=======
+import { View, Text } from "react-native";
+import React from "react";
+
+const Search = () => {
+  return (
+    <View>
+      <Text>Search</Text>
+>>>>>>> 199009bc643648195bfbd5e76044980ea5f5bcfe
     </View>
   );
 };
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -33,4 +44,6 @@ const styles = StyleSheet.create({
   },
 });
 
+=======
+>>>>>>> 199009bc643648195bfbd5e76044980ea5f5bcfe
 export default Search;
