@@ -14,15 +14,6 @@ const musicModel = require("../models/musics.js");
 
 const io = getIo();
 
-// io.on('connection', (socket)=>{
-//    console.log('user connected');
-//    socket.on('uploadAudio', dets=>{
-//       console.log(dets);
-//    })
-   
-//    socket.on('disconnect', ()=> console.log('user disconnected'))
-// })
-
 const handleUpload = async (files, res) => {
    try {
       io.emit("fileSize", files.length);

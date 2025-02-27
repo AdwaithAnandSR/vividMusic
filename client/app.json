@@ -53,6 +53,7 @@
     },
     "extra": {
       "clientApi": "https://vivid-music.vercel.app",
+      "clientApidev": "http://192.168.20.18:4000",
       "bin": "https://vivid-music.vercel.app",
       "router": {
         "origin": false

@@ -12,15 +12,18 @@ const server = http.createServer(app)
 const io = init(server)
 
 const uploadHandler = require('./handlers/socket.file.handler.js')
+const searchHandler = require("./handlers/search.handler.js")
 const mongoConfig = require("./config/mongodb.config.js");
 const indexRoutes = require("./routes/indexRoutes.js");
 const adminRoutes = require("./routes/adminRoutes.js");
 const dashboardRoutes = require("./routes/dashboardRoutes.js");
 
 app.use(express.json());
-app.use(cors({
-   "origin": ["http://localhost:3000", 'exp://127.0.0.1:8081',  "*"]
-}))
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "exp://192.168.20.18:8081"],
+  })
+);
 
 app.use("/", indexRoutes);
 app.use("/admin", adminRoutes);

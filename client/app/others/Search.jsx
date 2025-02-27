@@ -1,34 +1,29 @@
-<<<<<<< HEAD
 import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import useSearch from "../../hooks/useSearch.js";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const Search = () => {
+  const [text, setText] = useState();
+  useSearch({ text });
+
   return (
     <View style={styles.container}>
       <View>
         <TextInput
           style={styles.searchInput}
-          placeholder="serach.."
-          placeholderTextColor="silver"
+          placeholder="Search Song"
+          placeholderTextColor="white"
+          value={text}
+          onChangeText={(txt) => setText(txt)}
         />
         <Text>Search</Text>
       </View>
-=======
-import { View, Text } from "react-native";
-import React from "react";
-
-const Search = () => {
-  return (
-    <View>
-      <Text>Search</Text>
->>>>>>> 199009bc643648195bfbd5e76044980ea5f5bcfe
     </View>
   );
 };
 
-<<<<<<< HEAD
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -37,13 +32,17 @@ const styles = StyleSheet.create({
     top: 0,
   },
   searchInput: {
-    width: vw * 0.8,
-    height: vh * 0.06,
-    backgroundColor: "red",
+    width: vw * 0.9,
+    height: vh * 0.05,
+    color: "white",
+    fontWeight: 900,
+    backgroundColor: "rgb(66, 66, 66)",
     borderRadius: vw * 0.04,
+    fontSize: 17,
+    paddingHorizontal: vw * 0.03,
+    marginHorizontal: "auto",
+    marginTop: vh * 0.01,
   },
 });
 
-=======
->>>>>>> 199009bc643648195bfbd5e76044980ea5f5bcfe
 export default Search;

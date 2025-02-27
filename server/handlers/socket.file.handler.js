@@ -9,9 +9,6 @@ const io = getIo();
 let fileBuffers = {};
 
 io.on("connection", socket => {
-   console.log("Client connected");
-
-   // Handle receiving file chunks
    socket.on("uploadAudioChunk", data => {
       console.log(data);
    });
