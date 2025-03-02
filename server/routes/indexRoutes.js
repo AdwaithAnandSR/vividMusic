@@ -8,6 +8,17 @@ router.get("/", async (req, res) => {
    res.send('heloo');
 });
 
+router.post("/getGlobalSongs", async (req, res)=>{
+   try{
+      const {limit, page} = req.body;
+      const musics = await musicModel.find({}).sort({createdAt: -1}).skip((page-1)*limit).limit(limit);
+
+      if(musics) return res.status(200).json({ musics });
+   }catch(err){
+      console.error("error while fetching songs: ", error);
+   }
+});
+
 // authentication routes
 router.post("/signin", signin);
 router.post("/signup", signup);
