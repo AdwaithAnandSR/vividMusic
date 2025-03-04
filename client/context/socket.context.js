@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import Constants from "expo-constants";
 
 const SocketContext = createContext();
-const api = Constants.expoConfig.extra.clientApidev;
+const api = Constants.expoConfig.extra.clientApi;
 
 export const SocketProvider = ({ children }) => {
   const socket = io(api);

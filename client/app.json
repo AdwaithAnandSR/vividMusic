@@ -1,73 +1,74 @@
 {
-  "expo": {
-    "name": "vividMusic",
-    "slug": "vividMusic",
-    "version": "1.0.1",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "vividmusic",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.adwaithanandsr.vividMusic"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#000"
+   "expo": {
+      "name": "vividMusic",
+      "slug": "vividMusic",
+      "version": "1.0.1",
+      "orientation": "portrait",
+      "icon": "./assets/images/icon.png",
+      "scheme": "vividmusic",
+      "userInterfaceStyle": "automatic",
+      "newArchEnabled": true,
+      "ios": {
+         "supportsTablet": true,
+         "bundleIdentifier": "com.adwaithanandsr.vividMusic"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS",
-        "WAKE_LOCK",
-        "FOREGROUND_SERVICE",
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS",
-        "WAKE_LOCK",
-        "FOREGROUND_SERVICE"
-      ],
-      "package": "com.adwaithanandsr.vividMusic"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/icon.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#000"
-        }
-      ],
-      "expo-audio"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    },
-    "extra": {
-      "clientApi": "https://vivid-music.vercel.app",
-      "clientApidev": "http://192.168.20.18:4000",
-      "bin": "https://vivid-music.vercel.app",
-      "router": {
-        "origin": false
+      "android": {
+         "adaptiveIcon": {
+            "foregroundImage": "./assets/images/icon.png",
+            "backgroundColor": "#000"
+         },
+         "permissions": [
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS",
+            "WAKE_LOCK",
+            "FOREGROUND_SERVICE",
+            "android.permission.RECORD_AUDIO",
+            "android.permission.MODIFY_AUDIO_SETTINGS",
+            "WAKE_LOCK",
+            "FOREGROUND_SERVICE"
+         ],
+         "package": "com.adwaithanandsr.vividMusic"
       },
-      "eas": {
-        "projectId": "d948ee1f-e3f9-4aac-9365-a97e432ad66d"
+      "web": {
+         "bundler": "metro",
+         "output": "static",
+         "favicon": "./assets/images/icon.png"
+      },
+      "plugins": [
+         "expo-router",
+         [
+            "expo-splash-screen",
+            {
+               "image": "./assets/images/icon.png",
+               "imageWidth": 200,
+               "resizeMode": "contain",
+               "backgroundColor": "#000"
+            }
+         ],
+         "expo-audio"
+      ],
+      "experiments": {
+         "typedRoutes": true,
+         "reactCompiler": true
+      },
+      "extra": {
+         "clientApi": "http://localhost:4000",
+         "clientApi2": "https://vivid-music.vercel.app",
+         "clientApidev": "http://192.168.20.18:4000",
+         "bin": "https://vivid-music.vercel.app",
+         "router": {
+            "origin": false
+         },
+         "eas": {
+            "projectId": "d948ee1f-e3f9-4aac-9365-a97e432ad66d"
+         }
+      },
+      "owner": "adwaithanandsr",
+      "runtimeVersion": {
+         "policy": "appVersion"
+      },
+      "updates": {
+         "url": "https://u.expo.dev/d948ee1f-e3f9-4aac-9365-a97e432ad66d"
       }
-    },
-    "owner": "adwaithanandsr",
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/d948ee1f-e3f9-4aac-9365-a97e432ad66d"
-    }
-  }
+   }
 }
