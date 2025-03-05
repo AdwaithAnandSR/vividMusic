@@ -21,7 +21,7 @@ const dashboardRoutes = require("./routes/dashboardRoutes.js");
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000", "exp://192.168.20.18:8081", "exp://127.0.0.1:8081"],
+    origin: ["http://192.168.20.104:8081", "exp://192.168.20.104:8081", "exp://127.0.0.1:8081"],
   })
 );
 
