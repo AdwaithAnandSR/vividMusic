@@ -52,16 +52,15 @@
          "reactCompiler": true
       },
       "extra": {
-         "clientApi": "http://localhost:4000",
-         "clientApi2": "https://vivid-music.vercel.app",
-         "clientApidev": "http://192.168.20.18:4000",
-         "bin": "https://vivid-music.vercel.app",
-         "router": {
-            "origin": false
-         },
-         "eas": {
-            "projectId": "d948ee1f-e3f9-4aac-9365-a97e432ad66d"
-         }
+        "clientApi": "http://192.168.20.104:4000",
+        "clientApiDev": "http://192.168.20.104:4000",
+        "clientApi2": "https://vivid-music.vercel.app",
+        "router": {
+          "origin": false
+        },
+        "eas": {
+          "projectId": "d948ee1f-e3f9-4aac-9365-a97e432ad66d"
+        }
       },
       "owner": "adwaithanandsr",
       "runtimeVersion": {

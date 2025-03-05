@@ -1,12 +1,16 @@
 import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
 import React, { useState } from "react";
+import {FlashList} from "@shopify/flash-list";
+import ListItem from "../../components/ListItem.jsx";
+
+
 import useSearch from "../../hooks/useSearch.js";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const Search = () => {
    const [text, setText] = useState();
-   useSearch({ text });
+   const {songs } = useSearch({ text });
 
    return (
       <View style={styles.container}>
@@ -20,6 +24,7 @@ const Search = () => {
             />
             <Text>Search</Text>
          </View>
+         <FlashList data={songs} renderItem={(item)=> <ListItem item={item} />} />
       </View>
    );
 };
