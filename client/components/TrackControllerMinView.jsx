@@ -90,76 +90,77 @@ const TrackControllerMinView = ({ handleToFullView }) => {
    if (!track) return;
 
    return (
-      <TouchableOpacity
-         activeOpacity={0.9}
-         onPressIn={handleSwipeStart}
-         onPressOut={handleSwipeEnd}
-         style={styles.container}
-      >
-         <Animated.View style={[styles.gradient, { backgroundColor }]} />
-         <View
-            style={{
-               width: vh * 0.06,
-               height: vh * 0.06,
-               borderRadius: vh * 0.5,
-               overflow: "hidden",
-               marginLeft: vw * 0.03,
-               justifyContent: "center"
-            }}
-         >
-            <Image
-               source={track?.cover}
-               style={{ width: "100%", height: "100%" }}
-               contentFit="cover"
-               transition={1000}
-            />
-            {status.playing || status.isBuffering ? (
-               <LottieView
-                  source={require("../assets/animations/musicPlayingAnim2.json")}
-                  autoPlay
-                  loop
-                  style={{
-                     width: 35,
-                     height: 35,
-                     opacity: 0.8,
-                     marginLeft: -10,
-                     position: "absolute",
-                     alignSelf: "center",
-                     color: "#cc4cf9"
-                  }}
-               />
-            ) : null}
-         </View>
-         <Text
-            numberOfLines={2}
-            style={{
-               width: "75%",
-               fontWeight: "bold",
-               fontSize: vw * 0.04
-            }}
-         >
-            {track?.title}
-         </Text>
-      </TouchableOpacity>
+     <TouchableOpacity
+       activeOpacity={0.9}
+       onPressIn={handleSwipeStart}
+       onPressOut={handleSwipeEnd}
+       style={styles.container}
+     >
+       <Animated.View style={[styles.gradient, { backgroundColor }]} />
+       <View
+         style={{
+           width: vh * 0.06,
+           height: vh * 0.06,
+
+           borderRadius: vh * 0.5,
+           overflow: "hidden",
+           marginLeft: vw * 0.03,
+           justifyContent: "center",
+         }}
+       >
+         <Image
+           source={track?.cover}
+           style={{ width: "100%", height: "100%" }}
+           contentFit="cover"
+           transition={1000}
+         />
+         {status.playing || status.isBuffering ? (
+           <LottieView
+             source={require("../assets/animations/musicPlayingAnim2.json")}
+             autoPlay
+             loop
+             style={{
+               width: 35,
+               height: 35,
+               opacity: 0.8,
+               marginLeft: -10,
+               position: "absolute",
+               alignSelf: "center",
+               color: "#cc4cf9",
+             }}
+           />
+         ) : null}
+       </View>
+       <Text
+         numberOfLines={2}
+         style={{
+           width: "75%",
+           fontWeight: "bold",
+           fontSize: vw * 0.04,
+         }}
+       >
+         {track?.title}
+       </Text>
+     </TouchableOpacity>
    );
 };
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      maxHeight: 100,
-      alignItems: "center",
-      flexDirection: "row",
-      gap: vw * 0.03,
-      marginBottom: 5,
-      overflow: "hidden",
-      borderRadius: vw
-   },
-   gradient: {
-      width: "100%",
-      height: "100%",
-      position: "absolute"
-   }
+  container: {
+    maxHeight: 100,
+    minHeight: 85,
+    alignItems: "center",
+    flexDirection: "row",
+    gap: vw * 0.03,
+    overflow: "hidden",
+    borderRadius: vw,
+    marginTop: -10,
+  },
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+  },
 });
 
 export default TrackControllerMinView;

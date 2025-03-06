@@ -4,31 +4,12 @@ const io = getIo();
 
 const searchSongs = async query => {
    try {
-      const words = query.toLowerCase().split(" ");
+  
+     const songs = await musicModel.find({
+       title: { $regex: query, $options: "i" }, // i : case-insensitive
+     });
 
-      // Create search conditions with both singular and plural forms
-      const mustConditions = words.flatMap(word => [
-         { text: { query: word, path: "title", fuzzy: { maxEdits: 1 } } },
-         {
-            text: {
-               query: word.replace(/s$/, ""),
-               path: "title",
-               fuzzy: { maxEdits: 1 }
-            }
-         } // Remove trailing 's'
-      ]);
-
-      const result = await musicModel.aggregate([
-         {
-            $search: {
-               index: "title",
-               compound: {
-                  must: mustConditions
-               }
-            }
-         }
-      ]);
-      return result;
+     return songs;
    } catch (error) {
       console.error("Search error:", error);
       return [];

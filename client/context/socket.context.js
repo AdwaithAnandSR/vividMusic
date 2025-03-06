@@ -3,8 +3,8 @@ import io from "socket.io-client";
 import Constants from "expo-constants";
 
 const SocketContext = createContext();
-const api = Constants.expoConfig.extra.clientApi;
-// const api = "http://192.168.20.104:4000"
+// const api = Constants.expoConfig.extra.clientApi;
+const api = "http://192.168.20.104:5000"
 
 export const SocketProvider = ({ children }) => {
   const socket = io(api);
