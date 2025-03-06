@@ -52,7 +52,7 @@
          "reactCompiler": true
       },
       "extra": {
-        "clientApi": "http://192.168.20.104:4000",
+        "clientApi": "https://vivid-music.vercel.app",
         "clientApiDev": "http://192.168.20.104:4000",
         "clientApi2": "https://vivid-music.vercel.app",
         "router": {
