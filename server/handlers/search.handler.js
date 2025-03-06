@@ -38,7 +38,6 @@ const searchSongs = async query => {
 io.on("connection", socket => {
    socket.on("searchSongs", async text => {
       const songs = await searchSongs(text);
-      console.log(songs);
       socket.emit('searchSongsRes', songs)
    });
 });
