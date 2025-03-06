@@ -5,28 +5,38 @@ import ListItem from "../../components/ListItem.jsx";
 
 
 import useSearch from "../../hooks/useSearch.js";
+import { useEffect } from "react";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const Search = () => {
-   const [text, setText] = useState();
-   const {songs } = useSearch({ text });
+  const [text, setText] = useState();
+  const { songs, setSongs } = useSearch({ text });
 
-   return (
-      <View style={styles.container}>
-         <View>
-            <TextInput
-               style={styles.searchInput}
-               placeholder="Search Song"
-               placeholderTextColor="white"
-               value={text}
-               onChangeText={txt => setText(txt)}
-            />
-            <Text>Search</Text>
-         </View>
-         <FlashList data={songs} renderItem={(item)=> <ListItem item={item} />} />
+  useEffect(() => {
+    if (!text) setSongs([]);
+  }, [text]);
+
+  return (
+    <View style={styles.container}>
+      <View>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Song"
+          placeholderTextColor="white"
+          value={text}
+          onChangeText={(txt) => setText(txt)}
+        />
+        <Text>Search</Text>
       </View>
-   );
+      <FlashList
+        data={songs}
+        onEndReachedThreshold={0.5}
+        estimatedItemSize={vh * 0.95 || 100}
+        renderItem={({ item }) => <ListItem item={item} />}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

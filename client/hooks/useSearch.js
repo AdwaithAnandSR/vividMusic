@@ -7,12 +7,12 @@ const useSearch = ({ text, setList }) => {
    useEffect(() => {
       if (!text) return;
       socket.emit("searchSongs", text);
-      socket.on('searchSongsRes', songs=>{
-         setSongs(songs);
-      })
+      socket.on("searchSongsRes", (songs) => {
+        setSongs(songs);
+      });
    }, [text]);
 
-   return { songs }
+   return { songs , setSongs}
 };
 
 export default useSearch;
