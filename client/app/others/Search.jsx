@@ -31,7 +31,7 @@ const Search = () => {
       </View>
       <FlashList
         data={songs}
-        onEndReachedThreshold={0.5}
+        
         estimatedItemSize={vh * 0.95 || 100}
         renderItem={({ item }) => <ListItem item={item} />}
       />
