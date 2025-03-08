@@ -157,6 +157,8 @@ const TrackControllerMinView = ({ handleToFullView }) => {
             {track?.title}
          </Text>
       </TouchableOpacity>
+
+
    );
 };
 
@@ -178,6 +180,7 @@ const styles = StyleSheet.create({
       height: "100%",
       position: "absolute"
    }
+
 });
 
 export default TrackControllerMinView;

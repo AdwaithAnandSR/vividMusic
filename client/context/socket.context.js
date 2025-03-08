@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import Constants from "expo-constants";
 
 const SocketContext = createContext();
+
 // const api = Constants.expoConfig.extra.clientApi2;
 const api = "http://localhost:5000";
 
