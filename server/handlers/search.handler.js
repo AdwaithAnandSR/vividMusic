@@ -17,6 +17,7 @@ const searchSongs = async query => {
 };
 
 io.on("connection", socket => {
+   console.log("user connected: ", socket.id)
    socket.on("searchSongs", async text => {
       const songs = await searchSongs(text);
       socket.emit('searchSongsRes', songs)
