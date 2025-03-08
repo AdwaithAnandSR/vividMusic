@@ -16,9 +16,14 @@ import { useLists } from "../context/list.context.js";
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const TrackControllerMinView = ({ handleToFullView }) => {
-   const { track, setTrack, status } = useTrack();
+   const { track, setTrack, status, player } = useTrack();
    const { allSongs } = useLists();
    const [swipeStartPos, setSwipeStartPos] = useState({});
+
+   const togglePlay = () => {
+      if (status.playing) player.pause();
+      else player.play();
+   };
 
    const arr = [0, 0.2, 0.4, 0.6, 0.8, 1];
    const randomElem = arr[Math.floor(Math.random() * arr.length)];
@@ -46,7 +51,12 @@ const TrackControllerMinView = ({ handleToFullView }) => {
          Animated.sequence([
             Animated.timing(colorAnimation, {
                toValue: 1,
-               duration: 80000,
+               duration: 200000,
+               useNativeDriver: false
+            }),
+            Animated.timing(colorAnimation, {
+               toValue: 0,
+               duration: 200000,
                useNativeDriver: false
             })
          ])
@@ -66,7 +76,7 @@ const TrackControllerMinView = ({ handleToFullView }) => {
       const endY = e.nativeEvent.pageY;
 
       const diffY = endY - swipeStartPos.y;
-      if (diffY > 70) {
+      if (diffY > 40) {
          setTrack();
          return;
       }
@@ -90,77 +100,84 @@ const TrackControllerMinView = ({ handleToFullView }) => {
    if (!track) return;
 
    return (
-     <TouchableOpacity
-       activeOpacity={0.9}
-       onPressIn={handleSwipeStart}
-       onPressOut={handleSwipeEnd}
-       style={styles.container}
-     >
-       <Animated.View style={[styles.gradient, { backgroundColor }]} />
-       <View
-         style={{
-           width: vh * 0.06,
-           height: vh * 0.06,
+      <TouchableOpacity
+         activeOpacity={0.9}
+         onPressIn={handleSwipeStart}
+         onPressOut={handleSwipeEnd}
+         style={styles.container}
+      >
+         <Animated.View style={[styles.gradient, { backgroundColor }]} />
+         <TouchableOpacity
+            onPress={togglePlay}
+            style={{
+               width: vh * 0.06,
+               height: vh * 0.06,
 
-           borderRadius: vh * 0.5,
-           overflow: "hidden",
-           marginLeft: vw * 0.03,
-           justifyContent: "center",
-         }}
-       >
-         <Image
-           source={track?.cover}
-           style={{ width: "100%", height: "100%" }}
-           contentFit="cover"
-           transition={1000}
-         />
-         {status.playing || status.isBuffering ? (
-           <LottieView
-             source={require("../assets/animations/musicPlayingAnim2.json")}
-             autoPlay
-             loop
-             style={{
-               width: 35,
-               height: 35,
-               opacity: 0.8,
-               marginLeft: -10,
-               position: "absolute",
-               alignSelf: "center",
-               color: "#cc4cf9",
-             }}
-           />
-         ) : null}
-       </View>
-       <Text
-         numberOfLines={2}
-         style={{
-           width: "75%",
-           fontWeight: "bold",
-           fontSize: vw * 0.04,
-         }}
-       >
-         {track?.title}
-       </Text>
-     </TouchableOpacity>
+               borderRadius: vh * 0.5,
+               overflow: "hidden",
+               marginLeft: vw * 0.03,
+               justifyContent: "center"
+            }}
+         >
+            <Image
+               source={
+                  track.cover
+                     ? { uri: track.cover }
+                     : require("../assets/images/images.jpeg")
+               }
+               style={{ width: "100%", height: "100%" }}
+               contentFit="cover"
+               transition={1000}
+            />
+            {status.playing || status.isBuffering ? (
+               <LottieView
+                  source={require("../assets/animations/musicPlayingAnim2.json")}
+                  autoPlay
+                  loop
+                  style={{
+                     width: 35,
+                     height: 35,
+                     opacity: 0.8,
+                     marginLeft: -10,
+                     position: "absolute",
+                     alignSelf: "center",
+                     color: "#cc4cf9"
+                  }}
+               />
+            ) : null}
+         </TouchableOpacity>
+         <Text
+            numberOfLines={2}
+            style={{
+               width: "75%",
+               fontWeight: "bold",
+               fontSize: vw * 0.04
+            }}
+         >
+            {track?.title}
+         </Text>
+      </TouchableOpacity>
    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    maxHeight: 100,
-    minHeight: 85,
-    alignItems: "center",
-    flexDirection: "row",
-    gap: vw * 0.03,
-    overflow: "hidden",
-    borderRadius: vw,
-    marginTop: -10,
-  },
-  gradient: {
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-  },
+   container: {
+      width: "97%",
+      marginHorizontal: "auto",
+      maxHeight: 100,
+      minHeight: 85,
+      alignItems: "center",
+      flexDirection: "row",
+      gap: vw * 0.03,
+      overflow: "hidden",
+      borderRadius: vw,
+      marginTop: -10
+   },
+   gradient: {
+      width: "100%",
+      height: "100%",
+      position: "absolute"
+   }
 });
 
 export default TrackControllerMinView;

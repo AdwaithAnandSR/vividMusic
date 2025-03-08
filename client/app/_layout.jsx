@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import TrackController from "../components/TrackController.jsx";
+import NavBar from '../components/Navbar.jsx'
 
 import { ThemeProvider } from "../context/theme.context.js";
 import { SocketProvider } from "../context/socket.context.js"
@@ -22,6 +23,7 @@ const _layout = () => {
                 backgroundColor: "black",
               }}
             >
+               <NavBar />
               <Stack screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="index" />
                 <Stack.Screen name="home" />

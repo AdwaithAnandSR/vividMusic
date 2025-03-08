@@ -38,10 +38,7 @@ export const TrackProvider = ({ children }) => {
          playNextSong({ allSongs, setTrack, track });
 
       MusicControl.updatePlayback({
-         elapsedTime: status.currentTime / 1000,
-         state: status.playing
-            ? MusicControl.STATE_PLAYING
-            : MusicControl.STATE_PAUSED
+         elapsedTime: status.currentTime
       });
    }, [status]);
 

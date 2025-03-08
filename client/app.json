@@ -1,5 +1,7 @@
 {
    "expo": {
+
+    "jsEngine": "jsc",
       "name": "vividMusic",
       "slug": "vividMusic",
       "version": "1.0.1",
@@ -54,7 +56,7 @@
       "extra": {
         "clientApi": "https://vivid-music.vercel.app",
         "clientApiDev": "http://192.168.20.104:4000",
-        "clientApi2": "https://vivid-music.vercel.app",
+        "clientApi2": "https://vividmusicserver.onrender.com",
         "router": {
           "origin": false
         },

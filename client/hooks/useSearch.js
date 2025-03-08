@@ -3,16 +3,19 @@ import { useSocket } from "../context/socket.context.js";
 
 const useSearch = ({ text, setList }) => {
    const { socket } = useSocket();
-   const [songs, setSongs] = useState([])
+   const [songs, setSongs] = useState([]);
    useEffect(() => {
-      if (!text) return;
-      socket.emit("searchSongs", text);
-      socket.on("searchSongsRes", (songs) => {
-        setSongs(songs);
+      const timeout = setTimeout(() => {
+         if (!text || text.trim() == "") setSongs([]);
+         else socket.emit("searchSongs", text);
+      }, 500);
+      socket.on("searchSongsRes", songs => {
+         setSongs(songs);
       });
+      return () => clearTimeout(timeout);
    }, [text]);
 
-   return { songs , setSongs}
+   return { songs, setSongs };
 };
 
 export default useSearch;

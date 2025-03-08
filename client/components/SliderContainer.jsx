@@ -7,10 +7,14 @@ const { height: vh } = Dimensions.get("window");
 const SliderContainer = ({ status, player, lightVibrant }) => {
    const formatTime = ms => {
       if (!ms || ms < 0) return "00:00";
-      const minutes = Math.floor(ms / 60000);
-      const seconds = Math.floor((ms % 60000) / 1000);
+      const minutes = Math.floor(ms / 60);
+      const seconds = Math.floor(ms - minutes * 60);
 
-      return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+      return (
+         (minutes < 10 ? `0${minutes}` : minutes) +
+         ":" +
+         (seconds < 10 ? `0${seconds}` : seconds)
+      );
    };
 
    return (
@@ -33,7 +37,7 @@ const SliderContainer = ({ status, player, lightVibrant }) => {
             thumbTintColor={lightVibrant}
          />
          <Text style={styles.timeText}>
-            {status.duration ? formatTime(status.duration) : "00:00"}
+            {formatTime(status?.duration)}
          </Text>
       </View>
    );

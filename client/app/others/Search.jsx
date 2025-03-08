@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, TextInput, Dimensions } from "react-native";
 import React, { useState } from "react";
-import {FlashList} from "@shopify/flash-list";
+import { FlashList } from "@shopify/flash-list";
 import ListItem from "../../components/ListItem.jsx";
-
 
 import useSearch from "../../hooks/useSearch.js";
 import { useEffect } from "react";
@@ -10,33 +9,28 @@ import { useEffect } from "react";
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const Search = () => {
-  const [text, setText] = useState();
-  const { songs, setSongs } = useSearch({ text });
+   const [text, setText] = useState();
+   const { songs, setSongs } = useSearch({ text });
 
-  useEffect(() => {
-    if (!text) setSongs([]);
-  }, [text]);
-
-  return (
-    <View style={styles.container}>
-      <View>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Song"
-          placeholderTextColor="white"
-          value={text}
-          onChangeText={(txt) => setText(txt)}
-        />
-        <Text>Search</Text>
+   return (
+      <View style={styles.container}>
+         <View>
+            <TextInput
+               style={styles.searchInput}
+               placeholder="Search Song"
+               placeholderTextColor="white"
+               value={text}
+               onChangeText={txt => setText(txt)}
+            />
+            <Text>Search</Text>
+         </View>
+         <FlashList
+            data={songs}
+            estimatedItemSize={vh * 0.95 || 100}
+            renderItem={({ item }) => <ListItem item={item} />}
+         />
       </View>
-      <FlashList
-        data={songs}
-        
-        estimatedItemSize={vh * 0.95 || 100}
-        renderItem={({ item }) => <ListItem item={item} />}
-      />
-    </View>
-  );
+   );
 };
 
 const styles = StyleSheet.create({

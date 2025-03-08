@@ -51,18 +51,18 @@ const ListItem = ({ item }) => {
             {item.title}
          </Text>
 
-         {track === item && (status.playing || status.isBuffering) ? (
+         {track === item && (
             <LottieView
-               source={require("../assets/animations/musicPlayingAnim.json")}
                autoPlay
-               loop
+               source={require("../assets/animations/musicPlayingAnim.json")}
+               loop={status.playing || status.buffering ? true : false}
                style={{
                   width: 40,
                   height: 40,
                   marginLeft: -10
                }}
             />
-         ) : null}
+         )}
       </TouchableOpacity>
    );
 };

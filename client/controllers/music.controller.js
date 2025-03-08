@@ -11,15 +11,18 @@ export const setUpMusicController = () => {
 };
 
 export const setPlaying = (track, status) => {
-   if(!track || !status) return
-   
+   if (!track || !status) return;
+
    MusicControl.setNowPlaying({
       state: MusicControl.STATE_PLAYING,
       title: track?.title,
-      artwork: track?.cover ? track.cover : require('../assets/images/images.jpeg'),
-      duration: status?.duration / 1000,
-      elapsedTime: status?.currentTime / 1000,
-      color: 0x3ef6bf,
+      artwork: track?.cover
+         ? track.cover
+         : require("../assets/images/images.jpeg"),
+      duration: status?.duration,
+      elapsedTime: 100,
+      
+      colorized: true,
    });
 
    MusicControl.setPlayback({
@@ -34,10 +37,34 @@ export const playNextSong = ({ allSongs, setTrack, track }) => {
          ? allSongs[0]
          : allSongs[currentIndex + 1];
    setTrack(nextTrack);
+   
+   MusicControl.updatePlayback({
+      title: nextTrack?.title,
+      artwork: track?.cover
+         ? track.cover
+         : require("../assets/images/images.jpeg"),
+      duration: nextTrack?.duration / 60,
+      elapsedTime: 0,
+      
+   });
 };
 
 export const playPrevSong = ({ allSongs, setTrack, track }) => {
    const currentIndex = allSongs.findIndex(item => item._id === track?._id);
-   if (currentIndex === 0) setTrack(allSongs[allSongs.length - 1]);
-   else setTrack(allSongs[currentIndex - 1]);
+   
+   const nextTrack =
+      currentIndex === 0
+         ? allSongs[allSongs.length - 1]
+         : allSongs[currentIndex - 1]
+   setTrack(nextTrack);
+   
+   MusicControl.updatePlayback({
+      title: nextTrack?.title,
+      artwork: track?.cover
+         ? track.cover
+         : require("../assets/images/images.jpeg"),
+      duration: nextTrack?.duration / 60,
+      elapsedTime: 0,
+      
+   });
 };
