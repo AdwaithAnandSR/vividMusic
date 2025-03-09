@@ -5,12 +5,13 @@ import LottieView from "lottie-react-native";
 
 import { useTheme } from "../context/theme.context.js";
 import { useTrack } from "../context/track.context.js";
+// import { playSong } from "../controllers/music.controller.js";
 
 const { height: vh, width: vw } = Dimensions.get("window");
 
 const ListItem = ({ item }) => {
    const { styles } = useTheme();
-   const { setTrack, track, status } = useTrack();
+   const { track, status, setTrack } = useTrack();
 
    return (
       <TouchableOpacity

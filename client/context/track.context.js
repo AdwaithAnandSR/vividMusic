@@ -3,11 +3,13 @@ import { useAudioPlayer, useAudioPlayerStatus, AudioModule } from "expo-audio";
 import MusicControl, { Command } from "react-native-music-control";
 
 import { useLists } from "./list.context.js";
+import { setToPlay } from "../controllers/music.controller.js";
+
 import {
    setUpMusicController,
-   setPlaying,
    playNextSong,
-   playPrevSong
+   playPrevSong,
+   setPlaying
 } from "../controllers/music.controller.js";
 
 const TrackContext = createContext();
@@ -21,7 +23,6 @@ export const TrackProvider = ({ children }) => {
 
    const setUpPlayer = async () => {
       await AudioModule.setAudioModeAsync({
-         interruptionMode: "doNotMix",
          playsInSilentMode: true,
          shouldPlayInBackground: true,
          shouldRouteThroughEarpiece: true
@@ -33,30 +34,34 @@ export const TrackProvider = ({ children }) => {
       setUpMusicController();
    }, []);
 
+   const playSong = () => {
+      if (!track || !player) return;
+      player.play();
+      setToPlay(track, status);
+   };
+
    useEffect(() => {
-      if (status.playbackState === "ended")
+      playSong();
+   }, [track]);
+
+   useEffect(() => {
+      if (status.playbackState === "ended") {
          playNextSong({ allSongs, setTrack, track });
-
-      MusicControl.updatePlayback({
-         elapsedTime: status.currentTime
-      });
-   }, [status]);
-
-   useEffect(() => {
-      if (track && track.url && player) {
-         player.play();
-         setPlaying(track, status); //background play controll
-
-         const setUp = async () => {
-            await player.setAudioModeAsync({
-               playsInSilentMode: true,
-               shouldPlayInBackground: true,
-               shouldRouteThroughEarpiece: true
-            });
-         };
-         setUp();
       }
-   }, [track, player]);
+
+      if (track) {
+         MusicControl.setNowPlaying({
+            
+            duration: status?.duration || 0, // Ensure duration is updated
+            elapsedTime: status?.currentTime || 0
+         });
+
+         MusicControl.updatePlayback({
+            elapsedTime: status?.currentTime || 0,
+            duration: status?.duration || 0
+         });
+      }
+   }, [status, track]);
 
    MusicControl.on(Command.pause, () => {
       MusicControl.setPlayback({
@@ -71,14 +76,16 @@ export const TrackProvider = ({ children }) => {
       player.play();
    });
    MusicControl.on(Command.nextTrack, () =>
-      playNextSong({ allSongs, setTrack, track })
+      playNextSong({ allSongs, setTrack, track, status })
    );
    MusicControl.on(Command.previousTrack, () =>
-      playPrevSong({ allSongs, setTrack, track })
+      playPrevSong({ allSongs, setTrack, track, status })
    );
 
    return (
-      <TrackContext.Provider value={{ track, setTrack, player, status }}>
+      <TrackContext.Provider
+         value={{ track, setTrack, player, status, playSong }}
+      >
          {children}
       </TrackContext.Provider>
    );
