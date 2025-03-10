@@ -1,21 +1,27 @@
 import { useEffect, useState } from "react";
-import { useSocket } from "../context/socket.context.js";
+import Constants from "expo-constants";
+import axios from "axios";
+
+const api = Constants.expoConfig.extra.clientApi;
 
 const useSearch = ({ text, setList }) => {
-   const { socket } = useSocket();
-   const [songs, setSongs] = useState([]);
-   useEffect(() => {
-      const timeout = setTimeout(() => {
-         if (!text || text.trim() == "") setSongs([]);
-         else socket.emit("searchSongs", text);
-      }, 500);
-      socket.on("searchSongsRes", songs => {
-         setSongs(songs);
-      });
-      return () => clearTimeout(timeout);
-   }, [text]);
+  const [songs, setSongs] = useState([]);
 
-   return { songs, setSongs };
+  const fetchSongs = async () => {
+    const res = await axios.post(`${api}/searchSong`, text);
+    if (res?.data?.songs?.length > 0) setSongs(res?.data?.songs);
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!text || text.trim() == "") setSongs([]);
+      else fetchSongs();
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [text]);
+
+  return { songs, setSongs };
 };
 
 export default useSearch;

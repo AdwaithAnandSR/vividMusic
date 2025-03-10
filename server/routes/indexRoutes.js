@@ -19,6 +19,18 @@ router.post("/getGlobalSongs", async (req, res)=>{
    }
 });
 
+router.post("/searchSong", async (req, res) => {
+  try {
+    const songs = await musicModel.find({
+      title: { $regex: query, $options: "i" }, // i : case-insensitive
+    });
+
+    res.json({songs});
+  } catch (error) {
+    console.error("Search error:", error);
+  }
+});
+
 // authentication routes
 router.post("/signin", signin);
 router.post("/signup", signup);
